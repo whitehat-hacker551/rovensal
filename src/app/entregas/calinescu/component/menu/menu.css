@@ -1,0 +1,37 @@
+nav {
+    background-color: lightgreen;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+nav li {
+    display: flex;
+    align-items: stretch;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: rgba(0, 128, 0, 0.3);
+}
+
+nav a.active {
+    background-color: green;
+    color: white;
+}

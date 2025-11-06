@@ -1,0 +1,24 @@
+<nav>
+    <ul>
+        <li>
+            <a routerLink="/calinescu" [class.active]="activeRoute === '/calinescu'">
+                🏠 Inicio
+            </a>
+        </li>
+        <li>
+            <a routerLink="/calinescu/lista" [class.active]="activeRoute === '/calinescu/lista'">
+                📋 Lista Dinosaurios
+            </a>
+        </li>
+        <li>
+            <a>
+                ➕ Añadir Dinosaurio
+            </a>
+        </li>
+        <li>
+            <a>
+                ⭐ Añadir Dinosaurio a Favoritos
+            </a>
+        </li>
+    </ul>
+</nav>

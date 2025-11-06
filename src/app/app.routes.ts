@@ -18,6 +18,8 @@ import { SilvestreComponent } from './entregas/silvestre/component/silvestreComp
 import { SoaresComponent } from './entregas/soares/component/soaresComponent/soaresComponent';
 import { UskiComponent } from './entregas/uski/component/uskiComponent/uskiComponent';
 import { ZanonComponent } from './entregas/zanon/component/zanonComponent/zanonComponent';
+import { DinoComponent } from './entregas/calinescu/component/dino-component/dino-component';
+import { DinoDetails } from './entregas/calinescu/component/dino-details/dino-details';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -25,7 +27,14 @@ export const routes: Routes = [
     { path: 'alcalde', component: AlcaldeComponent },
     { path: 'alcanyiz', component: AlcanyizComponent },
     { path: 'alfonso', component: AlfonsoComponent },
-    { path: 'calinescu', component: CalinescuComponent },
+    { 
+        path: 'calinescu', 
+        component: CalinescuComponent,
+        children: [
+            { path: 'lista', component: DinoComponent },
+            { path: 'dino-details/:nombre', component: DinoDetails }
+        ]
+    },
     { path: 'castanyera', component: CastanyeraComponent },
     { path: 'contreras', component: ContrerasComponent },
     { path: 'fernandez', component: FernandezComponent },

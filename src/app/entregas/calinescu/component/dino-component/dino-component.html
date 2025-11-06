@@ -1,0 +1,33 @@
+<h2>Lista de Dinosaurios</h2>
+<p>Total: {{dinos.length}} dinosaurios</p>
+
+<ul style="list-style-type: none; padding: 0;">
+    @for(dino of dinos; track $index) {
+        <li style="margin: 10px 0;">
+            <a [routerLink]="['/calinescu/dino-details', dino.Name]"
+               style="cursor: pointer; padding: 10px; background-color: #f5f5f5; border-radius: 4px; transition: background-color 0.2s; display: block; text-decoration: none; color: inherit;"
+               onmouseover="this.style.backgroundColor='#e0e0e0'" 
+               onmouseout="this.style.backgroundColor='#f5f5f5'">
+                <strong>{{dino.Name}}</strong> - {{dino.Description}}
+            </a>
+            
+            @if(selectedDino) {
+                @if(selectedDino?.Name === dino.Name && dino.extract) {
+                    <div style="border: 2px solid #4CAF50; padding: 15px; margin-top: 10px; background-color: #f0f8ff; border-radius: 8px;">
+                        <h3 style="margin-top: 0;">{{dino.Name}}</h3>
+                        @if(dino.thumbnail) {
+                            <img [src]="dino.thumbnail.source" 
+                                 [alt]="dino.Name" 
+                                 style="max-width: 300px; border-radius: 4px; margin: 10px 0;">
+                        }
+                        <p>{{dino.extract}}</p>
+                        <button (click)="selectedDino = undefined;" 
+                                style="margin-top: 10px; padding: 5px 15px; cursor: pointer; background-color: #f44336; color: white; border: none; border-radius: 4px;">
+                            Cerrar detalles
+                        </button>
+                    </div>
+                }
+            }
+        </li>
+    }
+</ul>
