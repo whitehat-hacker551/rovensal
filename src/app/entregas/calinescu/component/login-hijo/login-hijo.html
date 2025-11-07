@@ -1,0 +1,121 @@
+<div class="modal-content">
+  <div class="modal-header bg-primary text-white">
+    <h4 class="modal-title">
+      <i class="bi bi-person-circle"></i> Iniciar Sesión
+    </h4>
+    <button type="button" class="btn-close btn-close-white" (click)="cerrar()"></button>
+  </div>
+
+  <div class="modal-body p-4">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Campo Nombre -->
+      <div class="mb-3">
+        <label for="nombre" class="form-label fw-bold">
+          <i class="bi bi-person-fill"></i> Nombre Completo *
+        </label>
+        <input 
+          type="text" 
+          id="nombre"
+          formControlName="nombre"
+          class="form-control"
+          placeholder="Ej: Juan Pérez"
+          [class.is-invalid]="nombreInvalido"
+          [class.is-valid]="nombreControl?.valid && nombreControl?.touched"
+        >
+        
+        <!-- Mensajes de error para nombre -->
+        @if (nombreInvalido) {
+          <div class="invalid-feedback d-block">
+            @if (nombreControl?.errors?.['required']) {
+              <i class="bi bi-exclamation-circle-fill"></i> El nombre es obligatorio
+            }
+            @if (nombreControl?.errors?.['minlength']) {
+              <i class="bi bi-exclamation-circle-fill"></i> El nombre debe tener al menos 3 caracteres
+            }
+            @if (nombreControl?.errors?.['maxlength']) {
+              <i class="bi bi-exclamation-circle-fill"></i> El nombre no puede tener más de 50 caracteres
+            }
+            @if (nombreControl?.errors?.['pattern']) {
+              <i class="bi bi-exclamation-circle-fill"></i> Solo se permiten letras y espacios
+            }
+          </div>
+        }
+        
+        <!-- Mensaje de éxito -->
+        @if (nombreControl?.valid && nombreControl?.touched) {
+          <div class="valid-feedback d-block">
+            <i class="bi bi-check-circle-fill"></i> Nombre válido
+          </div>
+        }
+      </div>
+
+      <!-- Campo Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label fw-bold">
+          <i class="bi bi-envelope-fill"></i> Correo Electrónico *
+        </label>
+        <input 
+          type="email" 
+          id="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="ejemplo@correo.com"
+          [class.is-invalid]="emailInvalido"
+          [class.is-valid]="emailControl?.valid && emailControl?.touched"
+        >
+        
+        <!-- Mensajes de error para email -->
+        @if (emailInvalido) {
+          <div class="invalid-feedback d-block">
+            @if (emailControl?.errors?.['required']) {
+              <i class="bi bi-exclamation-circle-fill"></i> El email es obligatorio
+            }
+            @if (emailControl?.errors?.['email'] || emailControl?.errors?.['pattern']) {
+              <i class="bi bi-exclamation-circle-fill"></i> Formato de email inválido (ejemplo@dominio.com)
+            }
+          </div>
+        }
+        
+        <!-- Mensaje de éxito -->
+        @if (emailControl?.valid && emailControl?.touched) {
+          <div class="valid-feedback d-block">
+            <i class="bi bi-check-circle-fill"></i> Email válido
+          </div>
+        }
+      </div>
+
+      <!-- Información sobre validación -->
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle-fill"></i>
+        <strong>Requisitos:</strong>
+        <ul class="mb-0 mt-2">
+          <li>Nombre: Solo letras, mínimo 3 caracteres</li>
+          <li>Email: Formato válido (ejemplo@dominio.com)</li>
+        </ul>
+      </div>
+
+      <!-- Botones -->
+      <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" (click)="cerrar()">
+          <i class="bi bi-x-circle"></i> Cancelar
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="loginForm.invalid"
+        >
+          <i class="bi bi-check-circle"></i> Iniciar Sesión
+        </button>
+      </div>
+
+      <!-- Indicador de estado del formulario -->
+      @if (loginForm.invalid && loginForm.touched) {
+        <div class="alert alert-danger mt-3 mb-0">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          Por favor, corrige los errores antes de continuar
+        </div>
+      }
+    </form>
+  </div>
+</div>

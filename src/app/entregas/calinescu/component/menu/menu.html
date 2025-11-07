@@ -1,24 +1,39 @@
-<nav>
-    <ul>
-        <li>
-            <a routerLink="/calinescu" [class.active]="activeRoute === '/calinescu'">
-                🏠 Inicio
-            </a>
+<nav class="navbar navbar-expand-lg navbar-dark mb-4 rounded-3 shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" routerLink="/calinescu">
+      DinoExplorer
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a routerLink="/calinescu" [class.active]="activeRoute === '/calinescu'" class="nav-link">
+            <i class="bi bi-house-fill"></i> Inicio
+          </a>
         </li>
-        <li>
-            <a routerLink="/calinescu/lista" [class.active]="activeRoute === '/calinescu/lista'">
-                📋 Lista Dinosaurios
-            </a>
+        <li class="nav-item">
+          <a routerLink="/calinescu/lista" [class.active]="activeRoute === '/calinescu/lista'" class="nav-link">
+            <i class="bi bi-list-ul"></i> Dinosaurios
+          </a>
         </li>
-        <li>
-            <a>
-                ➕ Añadir Dinosaurio
-            </a>
+        <li class="nav-item">
+          <a class="nav-link">
+            <i class="bi bi-info-circle-fill"></i> Añadir Dino
+          </a>
         </li>
-        <li>
-            <a>
-                ⭐ Añadir Dinosaurio a Favoritos
-            </a>
+        <li class="nav-item">
+          <button class="btn btn-primary ms-2" (click)="abrirLoginModal()">
+            <i class="bi bi-person-circle"></i> 
+            @if (usuarioActual) {
+              {{ usuarioActual }}
+            } @else {
+              Login
+            }
+          </button>
         </li>
-    </ul>
+      </ul>
+    </div>
+  </div>
 </nav>

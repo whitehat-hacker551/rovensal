@@ -1,0 +1,130 @@
+.modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  border-bottom: none;
+  padding: 1.5rem;
+}
+
+.modal-body {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 2px solid #ced4da;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  outline: none;
+}
+
+.form-control.is-valid {
+  border-color: #198754;
+  background-image: none;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+  background-image: none;
+}
+
+.invalid-feedback,
+.valid-feedback {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.valid-feedback {
+  color: #198754;
+  font-weight: 500;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+}
+
+.alert {
+  border-radius: 8px;
+  border: none;
+  padding: 1rem;
+}
+
+.alert-info {
+  background-color: #cfe2ff;
+  color: #084298;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #842029;
+  font-weight: 500;
+}
+
+.alert ul {
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.alert ul li {
+  margin-bottom: 0.25rem;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content {
+  animation: slideIn 0.3s ease;
+}

@@ -1,0 +1,10 @@
+.dino-item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.dino-item:hover {
+  transform: translateX(10px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3) !important;
+}

@@ -1,6 +1,6 @@
 <div style="padding: 20px;">
   @if(dino) {
-    <h1>{{dino.Name}}</h1>
+    <h1><i class="bi bi-info-circle-fill text-success"></i> {{dino.Name}}</h1>
     
     @if(dino.thumbnail) {
       <img [src]="dino.thumbnail.source" 
@@ -11,10 +11,70 @@
     <p style="font-size: 16px; line-height: 1.6;">{{dino.extract}}</p>
     
     <button routerLink="/calinescu/lista" 
-            style="margin-top: 20px; padding: 10px 20px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 4px;">
-      Volver a la lista
+            class="btn btn-success mt-3">
+      <i class="bi bi-arrow-left-circle"></i> Volver a la lista
     </button>
   } @else {
-    <p>Cargando detalles del dinosaurio...</p>
+    <div class="text-center">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mt-2"><i class="bi bi-hourglass-split"></i> Cargando detalles del dinosaurio...</p>
+    </div>
   }
+</div>
+
+<div class="modal fade" id="dinoDetailsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-success text-white">
+        <h4 class="modal-title fw-bold">
+          <i class="bi bi-info-circle-fill"></i> Detalles del Dinosaurio
+        </h4>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="row">
+          <div class="col-md-4 text-center mb-3">
+            <div class="dino-image-placeholder bg-success bg-opacity-10 rounded-3 p-5">
+              <i class="bi bi-image display-1 text-success"></i>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <h3 class="text-success mb-3">Nombre del Dinosaurio</h3>
+            <div class="mb-3">
+              <h6 class="text-muted">Descripción:</h6>
+              <p>Descripción detallada del dinosaurio con información relevante...</p>
+            </div>
+            <div class="row">
+              <div class="col-6 mb-3">
+                <h6 class="text-muted"><i class="bi bi-globe2"></i> Era:</h6>
+                <span class="badge bg-info">Jurásico</span>
+              </div>
+              <div class="col-6 mb-3">
+                <h6 class="text-muted"><i class="bi bi-egg-fill"></i> Dieta:</h6>
+                <span class="badge bg-success">Herbívoro</span>
+              </div>
+              <div class="col-6 mb-3">
+                <h6 class="text-muted"><i class="bi bi-rulers"></i> Tamaño:</h6>
+                <p class="mb-0">15-20 metros</p>
+              </div>
+              <div class="col-6 mb-3">
+                <h6 class="text-muted"><i class="bi bi-box"></i> Peso:</h6>
+                <p class="mb-0">5-10 toneladas</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="bi bi-x-circle"></i> Cerrar
+        </button>
+        <button type="button" class="btn btn-success">
+          <i class="bi bi-star-fill"></i> Agregar a favoritos
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

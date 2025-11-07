@@ -1,33 +1,48 @@
-<h2>Lista de Dinosaurios</h2>
-<p>Total: {{dinos.length}} dinosaurios</p>
+<div class="container my-4">
+  <h2 class="text-center mb-3">
+    <i class="bi bi-list-stars"></i> Lista de Dinosaurios
+  </h2>
+  <p class="text-center text-muted">
+    <i class="bi bi-clipboard-data"></i> Total: {{dinos.length}} dinosaurios
+  </p>
+</div>
 
-<ul style="list-style-type: none; padding: 0;">
+<div class="row">
     @for(dino of dinos; track $index) {
-        <li style="margin: 10px 0;">
-            <a [routerLink]="['/calinescu/dino-details', dino.Name]"
-               style="cursor: pointer; padding: 10px; background-color: #f5f5f5; border-radius: 4px; transition: background-color 0.2s; display: block; text-decoration: none; color: inherit;"
-               onmouseover="this.style.backgroundColor='#e0e0e0'" 
-               onmouseout="this.style.backgroundColor='#f5f5f5'">
-                <strong>{{dino.Name}}</strong> - {{dino.Description}}
-            </a>
-            
-            @if(selectedDino) {
-                @if(selectedDino?.Name === dino.Name && dino.extract) {
-                    <div style="border: 2px solid #4CAF50; padding: 15px; margin-top: 10px; background-color: #f0f8ff; border-radius: 8px;">
-                        <h3 style="margin-top: 0;">{{dino.Name}}</h3>
-                        @if(dino.thumbnail) {
-                            <img [src]="dino.thumbnail.source" 
-                                 [alt]="dino.Name" 
-                                 style="max-width: 300px; border-radius: 4px; margin: 10px 0;">
-                        }
-                        <p>{{dino.extract}}</p>
-                        <button (click)="selectedDino = undefined;" 
-                                style="margin-top: 10px; padding: 5px 15px; cursor: pointer; background-color: #f44336; color: white; border: none; border-radius: 4px;">
-                            Cerrar detalles
-                        </button>
+        <div class="col-md-4">
+            <div class="card dino-item shadow border-0 mb-3">
+                <div class="row g-0">
+                   
+                    <div [routerLink]="['/calinescu/dino-details', dino.Name]" class="col-md-10">
+                        <div class="card-body">
+                            <h5 class="card-title text-success fw-bold mb-2">
+                                <a [routerLink]="['/calinescu/dino-details', dino.Name]"
+                                   style="cursor: pointer; text-decoration: none; color: inherit;">
+                                     {{dino.Name}}
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted">{{dino.Description}}</p>
+                           
+                        </div>
                     </div>
-                }
-            }
-        </li>
+                </div>
+            </div>
+        </div>
     }
-</ul>
+</div>
+
+@if(selectedDino) {
+    <div style="border: 2px solid #4CAF50; padding: 15px; margin-top: 10px; background-color: #f0f8ff; border-radius: 8px;">
+        <h3 style="margin-top: 0;">{{selectedDino.Name}}</h3>
+        @if(selectedDino.thumbnail) {
+            <img [src]="selectedDino.thumbnail.source" 
+                 [alt]="selectedDino.Name" 
+                 style="max-width: 300px; border-radius: 4px; margin: 10px 0;">
+        }
+        <p>{{selectedDino.extract}}</p>
+        <button (click)="selectedDino = undefined;" 
+                class="btn btn-danger mt-3">
+            <i class="bi bi-x-circle"></i> Cerrar detalles
+        </button>
+    </div>
+}

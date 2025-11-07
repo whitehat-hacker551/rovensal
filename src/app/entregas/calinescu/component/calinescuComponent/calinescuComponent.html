@@ -1,3 +1,21 @@
-<h2>Entrega Calinescu</h2>
-<app-menu></app-menu>
-<router-outlet></router-outlet>
+<div class="calinescu-container">
+  <h1 class="text-center mb-4">
+    <i class="bi bi-stars"></i> Entrega Calinescu - Dinosaurios <i class="bi bi-stars"></i>
+  </h1>
+  
+  <!-- Saludo cuando el usuario está logueado -->
+  @if (usuarioLogueado) {
+    <div class="alert alert-success text-center">
+      <i class="bi bi-check-circle-fill"></i>
+      <strong>¡Bienvenido, {{ usuarioLogueado }}!</strong>
+    </div>
+  }
+  
+  <!-- Menu con comunicación bidireccional -->
+  <app-menu 
+    [usuarioActual]="usuarioLogueado"
+    (loginRealizado)="recibirLogin($event)"
+  ></app-menu>
+  
+  <router-outlet></router-outlet>
+</div>
