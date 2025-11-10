@@ -3,11 +3,13 @@ import { Dino } from '../../model/dinoInterface';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { FavoritosService } from '../../services/favoritos.service';
 
 /**
  * Componente de diálogo para seleccionar un dinosaurio favorito.
  * Se abre como ventana emergente (MatDialog) desde el menú.
- * Muestra la lista completa de dinosaurios y permite seleccionar uno.
+ * Muestra la lista completa de dinosaurios y permite seleccionar uno para añadirlo a favoritos.
+ * Indica visualmente cuáles dinosaurios ya están en favoritos.
  */
 @Component({
   selector: 'app-dino-selector',
@@ -27,6 +29,9 @@ export class DinoSelector {
   
   /** Datos recibidos desde el componente que abrió el diálogo */
   readonly data = inject(MAT_DIALOG_DATA);
+  
+  /** Servicio de favoritos para verificar y añadir */
+  favoritosService = inject(FavoritosService);
 
   /**
    * Hook del ciclo de vida que se ejecuta al inicializar el componente.
@@ -40,16 +45,35 @@ export class DinoSelector {
   }
 
   /**
-   * Selecciona un dinosaurio y cierra el diálogo devolviendo el dinosaurio seleccionado.
+   * Selecciona un dinosaurio y lo añade a favoritos.
+   * Cierra el diálogo devolviendo el dinosaurio seleccionado.
    * @param dino - El dinosaurio seleccionado por el usuario
    * @returns void - Cierra el diálogo con el dinosaurio como resultado
    * @example
    * selectDino(trex);
-   * // El diálogo se cierra y devuelve el T-Rex al componente padre
+   * // Añade a favoritos y cierra el diálogo
    */
   selectDino(dino: Dino) {
-    this.dinoSelected = dino;
-    this.oDialog.close(this.dinoSelected);
+    const agregado = this.favoritosService.addFavorito(dino);
+    
+    if (agregado) {
+      this.dinoSelected = dino;
+      this.oDialog.close({ success: true, dino: this.dinoSelected });
+    } else {
+      // Ya estaba en favoritos
+      this.oDialog.close({ success: false, message: 'Este dinosaurio ya está en favoritos' });
+    }
+  }
+  
+  /**
+   * Verifica si un dinosaurio ya está en favoritos.
+   * @param nombreDino - Nombre del dinosaurio a verificar
+   * @returns true si está en favoritos
+   * @example
+   * const esFav = this.esFavorito('Tyrannosaurus');
+   */
+  esFavorito(nombreDino: string): boolean {
+    return this.favoritosService.esFavorito(nombreDino);
   }
 
   /**

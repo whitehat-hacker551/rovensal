@@ -20,6 +20,7 @@ import { UskiComponent } from './entregas/uski/component/uskiComponent/uskiCompo
 import { ZanonComponent } from './entregas/zanon/component/zanonComponent/zanonComponent';
 import { DinoComponent } from './entregas/calinescu/component/dino-component/dino-component';
 import { DinoDetails } from './entregas/calinescu/component/dino-details/dino-details';
+import { Favoritos } from './entregas/calinescu/component/favoritos/favoritos';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -32,7 +33,8 @@ export const routes: Routes = [
         component: CalinescuComponent,
         children: [
             { path: 'lista', component: DinoComponent },
-            { path: 'dino-details/:nombre', component: DinoDetails }
+            { path: 'dino-details/:nombre', component: DinoDetails },
+            { path: 'favoritos', component: Favoritos }
         ]
     },
     { path: 'castanyera', component: CastanyeraComponent },

@@ -3,49 +3,129 @@
     <i class="bi bi-stars"></i> Entrega Calinescu - Dinosaurios <i class="bi bi-stars"></i>
   </h1>
   
- 
-  
   <!-- Menu con comunicación bidireccional -->
   <app-menu 
+    #menuRef
     [usuarioActual]="usuarioLogueado"
     (loginRealizado)="recibirLogin($event)"
   ></app-menu>
 
-   <!-- Saludo cuando el usuario está logueado -->
+  <!-- Saludo cuando el usuario está logueado -->
   @if (usuarioLogueado) {
     <div class="alert alert-success text-center">
       <i class="bi bi-check-circle-fill"></i>
       <strong>¡Bienvenido, {{ usuarioLogueado }}!</strong>
     </div>
+  }
+
+  <!-- CONTENIDO SOLO VISIBLE EN LA RUTA /calinescu (Inicio) -->
+  @if(mostrarDinoFavorito) {
     
-    <!-- Mostrar el dinosaurio favorito SOLO en la ruta raíz /calinescu -->
-    @if(mostrarDinoFavorito && dinoFavorito) {
-      <div style="margin: 20px 0;">
-        <h4 style="color: #4CAF50;">
-          <i class="bi bi-heart-fill text-danger"></i> 
-          Dinosaurio favorito de {{ usuarioLogueado }}
-        </h4>
-        
-        <div style="border: 2px solid #4CAF50; padding: 15px; margin-top: 10px; background-color: #f0f8ff; border-radius: 8px;">
-          <h3 style="margin-top: 0; color: #2e7d32;">
-            <i class="bi bi-star-fill text-warning"></i> {{dinoFavorito.Name}}
-          </h3>
-          
-          @if(dinoFavorito.thumbnail) {
-            <img [src]="dinoFavorito.thumbnail.source" 
-                 [alt]="dinoFavorito.Name" 
-                 style="max-width: 300px; border-radius: 4px; margin: 10px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-          }
-          
-          @if(dinoFavorito.extract) {
-            <p style="margin: 10px 0; line-height: 1.6;">
-              <strong><i class="bi bi-book"></i> Info de Wikipedia:</strong><br>
-              {{dinoFavorito.extract}}
-            </p>
-          }
+    <!-- 1. HERO SECTION -->
+    <div class="hero-section text-center py-5 mb-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+      <h2 class="display-4 fw-bold mb-3" style="color: white;">
+        <i class="bi bi-trophy-fill text-warning"></i> 
+        Explora el Mundo de los Dinosaurios
+      </h2>
+      <p class="lead mb-4">Descubre, aprende y guarda tus dinosaurios favoritos</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a [routerLink]="['/calinescu/lista']" class="btn btn-light btn-lg">
+          <i class="bi bi-search"></i> Explorar Dinosaurios
+        </a>
+        @if(!usuarioLogueado) {
+          <button class="btn btn-warning btn-lg" (click)="menuRef.abrirLoginModal()">
+            <i class="bi bi-person-circle"></i> Iniciar Sesión
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- 2. ESTADÍSTICAS RÁPIDAS -->
+    <div class="row mb-5 justify-content-center">
+      <div class="col-md-4">
+        <div class="card text-center border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+          <div class="card-body">
+            <i class="bi bi-grid-3x3-gap-fill" style="font-size: 3rem;"></i>
+            <h3 class="display-4 fw-bold mt-3">{{ totalDinosaurios }}</h3>
+            <p class="mb-0">Dinosaurios Disponibles</p>
+          </div>
         </div>
       </div>
+      
+      @if(usuarioLogueado) {
+        <div class="col-md-4">
+          <div class="card text-center border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+            <div class="card-body">
+              <i class="bi bi-heart-fill" style="font-size: 3rem;"></i>
+              <h3 class="display-4 fw-bold mt-3">{{ favoritosService.getCantidadFavoritos() }}</h3>
+              <p class="mb-0">Tus Favoritos</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- 3. DINOSAURIOS DESTACADOS -->
+    <div class="mb-5">
+      <h3 class="text-center mb-4">
+        <i class="bi bi-stars text-warning"></i> 
+        Dinosaurios Destacados
+      </h3>
+      <div class="row">
+        @for(dino of dinosauriosDestacados; track dino.Name) {
+          <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm border-0 hover-card" style="cursor: pointer; transition: transform 0.3s;">
+              <div class="card-body text-center">
+                <i class="bi bi-file-earmark-text text-success" style="font-size: 3rem;"></i>
+                <h5 class="card-title text-success fw-bold mt-3">{{ dino.Name }}</h5>
+                <p class="card-text text-muted small">{{ dino.Description.substring(0, 80) }}...</p>
+                <a [routerLink]="['/calinescu/dino-details', dino.Name]" class="btn btn-outline-success btn-sm">
+                  <i class="bi bi-eye"></i> Ver Detalles
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Mostrar el dinosaurio favorito -->
+    @if(usuarioLogueado && dinoFavorito) {
+        <div style="margin: 20px 0;">
+          <h4 style="color: #4CAF50;">
+            <i class="bi bi-heart-fill text-danger"></i> 
+            Dinosaurio favorito de {{ usuarioLogueado }}
+          </h4>
+          
+          <div style="border: 2px solid #4CAF50; padding: 15px; margin-top: 10px; background-color: #f0f8ff; border-radius: 8px;">
+            <h3 style="margin-top: 0; color: #2e7d32;">
+              <i class="bi bi-star-fill text-warning"></i> {{dinoFavorito.Name}}
+            </h3>
+            
+            @if(dinoFavorito.thumbnail) {
+              <img [src]="dinoFavorito.thumbnail.source" 
+                   [alt]="dinoFavorito.Name" 
+                   style="max-width: 300px; border-radius: 4px; margin: 10px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            }
+            
+            @if(dinoFavorito.extract) {
+              <p style="margin: 10px 0; line-height: 1.6;">
+                <strong><i class="bi bi-book"></i> Info de Wikipedia:</strong><br>
+                {{dinoFavorito.extract}}
+              </p>
+            }
+          </div>
+        </div>
     }
+    
   }
+  
   <router-outlet></router-outlet>
 </div>
+
+<style>
+.hover-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+}
+</style>

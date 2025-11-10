@@ -66,37 +66,79 @@
       <!-- Contador de resultados -->
       <div class="alert alert-info text-center">
         <i class="bi bi-info-circle"></i>
-        Mostrando <strong>{{ dinosFiltrados.length }}</strong> de <strong>{{ dinos.length }}</strong> dinosaurios
+        Mostrando <strong>{{ dinosPaginados.length }}</strong> de <strong>{{ dinosFiltrados.length }}</strong> dinosaurios
+        (Total: <strong>{{ dinos.length }}</strong>)
         @if(searchTerm) {
-          <span> con el término "<strong>{{ searchTerm }}</strong>"</span>
+          <span> - Filtrados por: "<strong>{{ searchTerm }}</strong>"</span>
         }
+        <br>
+        <small class="text-muted">
+          Página {{ paginaActual }} de {{ getTotalPaginas() }} | {{ itemsPorPagina }} por página
+        </small>
       </div>
       
-      <!-- Lista de dinosaurios FILTRADOS -->
-      @if(dinosFiltrados.length > 0) {
+      <!-- Lista de dinosaurios PAGINADOS -->
+      @if(dinosPaginados.length > 0) {
         <div class="row">
-          @for(dino of dinosFiltrados; track $index) {
+          @for(dino of dinosPaginados; track $index) {
               <div class="col-md-4">
                   <div class="card dino-item shadow border-0 mb-3">
-                      <div class="row g-0">
-                         
-                          <div [routerLink]="['/calinescu/dino-details', dino.Name]" class="col-md-10">
-                              <div class="card-body">
-                                  <h5 class="card-title text-success fw-bold mb-2">
-                                      <a [routerLink]="['/calinescu/dino-details', dino.Name]"
-                                         style="cursor: pointer; text-decoration: none; color: inherit;">
-                                           {{dino.Name}}
-                                      </a>
-                                  </h5>
-                                  <p class="card-text text-muted">{{dino.Description}}</p>
-                                 
-                              </div>
+                      <div [routerLink]="['/calinescu/dino-details', dino.Name]" style="cursor: pointer;">
+                          <div class="card-body">
+                              <h5 class="card-title text-success fw-bold mb-2">
+                                  {{dino.Name}}
+                              </h5>
+                              <p class="card-text text-muted">{{dino.Description}}</p>
                           </div>
                       </div>
                   </div>
               </div>
           }
         </div>
+        
+        <!-- CONTROLES DE PAGINACIÓN -->
+        @if(getTotalPaginas() > 1) {
+          <nav aria-label="Paginación de dinosaurios">
+            <ul class="pagination justify-content-center mt-4">
+              <!-- Botón Primera página -->
+              <li class="page-item" [class.disabled]="paginaActual === 1">
+                <button class="page-link" (click)="irAPagina(1)" [disabled]="paginaActual === 1">
+                  <i class="bi bi-chevron-double-left"></i>
+                </button>
+              </li>
+              
+              <!-- Botón Anterior -->
+              <li class="page-item" [class.disabled]="paginaActual === 1">
+                <button class="page-link" (click)="paginaAnterior()" [disabled]="paginaActual === 1">
+                  <i class="bi bi-chevron-left"></i> Anterior
+                </button>
+              </li>
+              
+              <!-- Números de página -->
+              @for(pagina of getPaginas(); track pagina) {
+                <li class="page-item" [class.active]="paginaActual === pagina">
+                  <button class="page-link" (click)="irAPagina(pagina)">
+                    {{ pagina }}
+                  </button>
+                </li>
+              }
+              
+              <!-- Botón Siguiente -->
+              <li class="page-item" [class.disabled]="paginaActual === getTotalPaginas()">
+                <button class="page-link" (click)="paginaSiguiente()" [disabled]="paginaActual === getTotalPaginas()">
+                  Siguiente <i class="bi bi-chevron-right"></i>
+                </button>
+              </li>
+              
+              <!-- Botón Última página -->
+              <li class="page-item" [class.disabled]="paginaActual === getTotalPaginas()">
+                <button class="page-link" (click)="irAPagina(getTotalPaginas())" [disabled]="paginaActual === getTotalPaginas()">
+                  <i class="bi bi-chevron-double-right"></i>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        }
       } @else {
         <div class="container">
           <div class="alert alert-warning text-center">

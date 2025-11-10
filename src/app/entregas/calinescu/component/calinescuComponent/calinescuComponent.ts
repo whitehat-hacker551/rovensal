@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Menu } from '../menu/menu';
 import { DinoServ } from '../../services/dino-serv';
 import { Dino } from '../../model/dinoInterface';
+import { FavoritosService } from '../../services/favoritos.service';
 import { filter } from 'rxjs';
 
 /**
@@ -13,7 +14,7 @@ import { filter } from 'rxjs';
  */
 @Component({
   selector: 'app-calinescu',
-  imports: [Menu, RouterOutlet],
+  imports: [Menu, RouterOutlet, RouterLink],
   templateUrl: './calinescuComponent.html',
   styleUrl: './calinescuComponent.css',
   standalone: true
@@ -30,6 +31,15 @@ export class CalinescuComponent {
   
   /** Flag que controla si se muestra el bloque del dinosaurio favorito según la ruta */
   mostrarDinoFavorito: boolean = true;
+  
+  /** Lista completa de dinosaurios para estadísticas */
+  totalDinosaurios: number = 0;
+  
+  /** Dinosaurios destacados para mostrar en la página de inicio */
+  dinosauriosDestacados: Dino[] = [];
+  
+  /** Referencia al componente Menu */
+  @ViewChild(Menu) menuComponent!: Menu;
 
   /**
    * Constructor del componente.
@@ -38,8 +48,13 @@ export class CalinescuComponent {
    * la visibilidad del dinosaurio favorito solo en la ruta raíz /calinescu.
    * @param dinoServ - Servicio para obtener información de dinosaurios desde APIs
    * @param router - Router de Angular para detectar cambios de navegación
+   * @param favoritosService - Servicio para gestionar favoritos
    */
-  constructor(private dinoServ: DinoServ, private router: Router) {
+  constructor(
+    private dinoServ: DinoServ, 
+    private router: Router,
+    public favoritosService: FavoritosService
+  ) {
     // Escuchar cambios de ruta para controlar visibilidad del dino favorito
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -47,6 +62,9 @@ export class CalinescuComponent {
       // Solo mostrar el dino favorito si estamos en la ruta exacta /calinescu
       this.mostrarDinoFavorito = event.url === '/calinescu';
     });
+    
+    // Cargar estadísticas y dinosaurios destacados
+    this.cargarDatosInicio();
   }
 
   /**
@@ -92,5 +110,30 @@ export class CalinescuComponent {
       };
       console.log('Dinosaurio favorito cargado:', this.dinoFavorito);
     });
+  }
+  
+  /**
+   * Carga los datos iniciales para la página de inicio:
+   * - Total de dinosaurios disponibles
+   * - Dinosaurios destacados aleatorios
+   */
+  cargarDatosInicio() {
+    this.dinoServ.getAllDinos().subscribe(dinos => {
+      this.totalDinosaurios = dinos.length;
+      
+      // Seleccionar 4 dinosaurios aleatorios para destacados
+      this.dinosauriosDestacados = this.obtenerDinosAleatorios(dinos, 4);
+    });
+  }
+  
+  /**
+   * Obtiene un número específico de dinosaurios aleatorios de una lista.
+   * @param dinos - Array de dinosaurios completo
+   * @param cantidad - Cantidad de dinosaurios a obtener
+   * @returns Array con dinosaurios seleccionados aleatoriamente
+   */
+  obtenerDinosAleatorios(dinos: Dino[], cantidad: number): Dino[] {
+    const shuffled = [...dinos].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, cantidad);
   }
 }

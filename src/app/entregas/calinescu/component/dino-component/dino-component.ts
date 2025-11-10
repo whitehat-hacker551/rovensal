@@ -13,6 +13,7 @@ import { Dino } from '../../model/dinoInterface';
  * Obtiene los datos desde una API externa y permite navegar a los detalles
  * de cada dinosaurio mediante rutas parametrizadas.
  * Incluye funcionalidad de búsqueda en tiempo real para filtrar dinosaurios.
+ * Incluye sistema de paginación.
  * Componente enrutado accesible desde /calinescu/lista
  */
 @Component({
@@ -47,6 +48,16 @@ export class DinoComponent {
    */
   estadoCarga: 'cargando' | 'cargado' | 'vacio' | 'error' = 'cargando';
   
+  // PROPIEDADES DE PAGINACIÓN
+  /** Número de dinosaurios a mostrar por página */
+  itemsPorPagina: number = 12;
+  
+  /** Página actual (comienza en 1) */
+  paginaActual: number = 1;
+  
+  /** Array con los dinosaurios de la página actual */
+  dinosPaginados: Dino[] = [];
+  
   /**
    * Hook del ciclo de vida de Angular que se ejecuta al inicializar el componente.
    * Carga la lista inicial de dinosaurios al renderizar el componente.
@@ -79,6 +90,7 @@ export class DinoComponent {
           this.estadoCarga = 'vacio';
         } else {
           this.estadoCarga = 'cargado';
+          this.actualizarPaginacion(); // Calcular primera página
         }
       },
       error: (error) => {
@@ -93,6 +105,7 @@ export class DinoComponent {
    * Busca coincidencias en el nombre y la descripción (case-insensitive).
    * Se ejecuta automáticamente cada vez que cambia el input de búsqueda.
    * Si el término está vacío, muestra todos los dinosaurios.
+   * Reinicia la paginación a la primera página al filtrar.
    * @returns void - Los resultados filtrados se almacenan en dinosFiltrados
    * @example
    * this.searchTerm = 'Rex';
@@ -112,6 +125,10 @@ export class DinoComponent {
         dino.Description.toLowerCase().includes(termino)
       );
     }
+    
+    // Reiniciar a la primera página al filtrar
+    this.paginaActual = 1;
+    this.actualizarPaginacion();
   }
 
   /**
@@ -157,5 +174,93 @@ export class DinoComponent {
    */
   irADinoDetails() {
     window.location.href = 'dino-details/' + this.selectedDino?.Name;
+  }
+  
+  // MÉTODOS DE PAGINACIÓN
+  
+  /**
+   * Calcula el número total de páginas según los dinosaurios filtrados.
+   * @returns Número total de páginas
+   * @example
+   * const totalPaginas = this.getTotalPaginas();
+   */
+  getTotalPaginas(): number {
+    return Math.ceil(this.dinosFiltrados.length / this.itemsPorPagina);
+  }
+  
+  /**
+   * Actualiza el array de dinosaurios paginados según la página actual.
+   * Calcula el índice de inicio y fin para extraer el subconjunto correcto.
+   * @example
+   * this.actualizarPaginacion();
+   */
+  actualizarPaginacion(): void {
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    const fin = inicio + this.itemsPorPagina;
+    this.dinosPaginados = this.dinosFiltrados.slice(inicio, fin);
+  }
+  
+  /**
+   * Navega a la página anterior si no está en la primera.
+   * @example
+   * this.paginaAnterior();
+   */
+  paginaAnterior(): void {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.actualizarPaginacion();
+    }
+  }
+  
+  /**
+   * Navega a la página siguiente si no está en la última.
+   * @example
+   * this.paginaSiguiente();
+   */
+  paginaSiguiente(): void {
+    if (this.paginaActual < this.getTotalPaginas()) {
+      this.paginaActual++;
+      this.actualizarPaginacion();
+    }
+  }
+  
+  /**
+   * Navega a una página específica.
+   * @param pagina - Número de página a la que navegar
+   * @example
+   * this.irAPagina(3);
+   */
+  irAPagina(pagina: number): void {
+    if (pagina >= 1 && pagina <= this.getTotalPaginas()) {
+      this.paginaActual = pagina;
+      this.actualizarPaginacion();
+    }
+  }
+  
+  /**
+   * Genera un array de números de página para mostrar en la UI.
+   * Muestra máximo 5 páginas alrededor de la actual.
+   * @returns Array con los números de página a mostrar
+   * @example
+   * const paginas = this.getPaginas(); // [1, 2, 3, 4, 5]
+   */
+  getPaginas(): number[] {
+    const total = this.getTotalPaginas();
+    const paginas: number[] = [];
+    
+    // Mostrar máximo 5 páginas
+    let inicio = Math.max(1, this.paginaActual - 2);
+    let fin = Math.min(total, inicio + 4);
+    
+    // Ajustar inicio si estamos cerca del final
+    if (fin - inicio < 4) {
+      inicio = Math.max(1, fin - 4);
+    }
+    
+    for (let i = inicio; i <= fin; i++) {
+      paginas.push(i);
+    }
+    
+    return paginas;
   }
 }

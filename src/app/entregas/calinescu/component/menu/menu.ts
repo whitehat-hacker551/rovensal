@@ -5,6 +5,7 @@ import { LoginHijo } from '../login-hijo/login-hijo';
 import { DinoSelector } from '../dino-selector/dino-selector';
 import { Dino } from '../../model/dinoInterface';
 import { DinoServ } from '../../services/dino-serv';
+import { FavoritosService } from '../../services/favoritos.service';
 
 /**
  * Componente de menú de navegación para la sección Calinescu.
@@ -21,9 +22,15 @@ import { DinoServ } from '../../services/dino-serv';
 export class Menu {
   /** Router inyectado para detectar cambios de navegación */
   private oRouter = inject(Router);
-   dinos: Dino[]=[];
+  
+  /** Lista de dinosaurios disponibles */
+  dinos: Dino[] = [];
+  
   /** Servicio MatDialog para abrir ventanas emergentes */
   private dialog = inject(MatDialog);
+  
+  /** Servicio de favoritos inyectado */
+  favoritosService = inject(FavoritosService);
   
   /** URL de la ruta actualmente activa, usada para resaltar el link del menú */
   activeRoute: string = '';
@@ -89,8 +96,9 @@ export class Menu {
   }
   /**
    * Abre una ventana emergente (MatDialog) con el selector de dinosaurios.
-   * Permite al usuario seleccionar dinosaurios de la lista completa.
+   * Permite al usuario seleccionar dinosaurios para añadir a favoritos.
    * Pasa la lista de dinosaurios disponibles al diálogo.
+   * Solo disponible para usuarios logueados.
    * @returns void
    * @example
    * // Desde el template
@@ -98,17 +106,21 @@ export class Menu {
    */
   abrirSelectorDinos(){
     const dialogRef = this.dialog.open(DinoSelector, {
-      width: '600px',
+      width: '1000px',
       height: '700px',
+      maxWidth: '95vw',
       data: {
         dinosaurios: this.dinos
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Dinosaurio seleccionado:', result);
-        // Aquí puedes emitir al padre o guardar en favoritos
+      if (result && result.success) {
+        console.log('✅ Dinosaurio añadido a favoritos:', result.dino.Name);
+        // Aquí podrías mostrar un mensaje de éxito al usuario
+      } else if (result && !result.success) {
+        console.log('⚠️ ' + result.message);
+        // Aquí podrías mostrar el mensaje de que ya está en favoritos
       }
     });
   }

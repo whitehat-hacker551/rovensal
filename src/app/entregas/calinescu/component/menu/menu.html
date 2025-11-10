@@ -15,16 +15,10 @@
         </li>
         @if(usuarioActual) {
         <li class="nav-item">
-           <button class="btn btn-primary ms-2" (click)="abrirSelectorDinos()">
-            <i class="bi bi-person-circle"></i> 
-            Añadir a favoritos
+           <button class="btn btn-link nav-link text-white ms-2" (click)="abrirSelectorDinos()">
+            <i class="bi bi-heart-fill"></i> 
+            Añadir a Favoritos
           </button> 
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link">
-            <i class="bi bi-info-circle-fill"></i> Añadir Dino
-          </a>
         </li>
         }
         <li class="nav-item">
@@ -32,6 +26,17 @@
             <i class="bi bi-list-ul"></i> Dinosaurios
           </a>
         </li>
+        
+        @if(usuarioActual) {
+        <li class="nav-item">
+          <a routerLink="/calinescu/favoritos" [class.active]="activeRoute === '/calinescu/favoritos'" class="nav-link">
+            <i class="bi bi-heart-fill"></i> Favoritos
+            @if(favoritosService.getCantidadFavoritos() > 0) {
+              <span class="badge bg-danger ms-1">{{ favoritosService.getCantidadFavoritos() }}</span>
+            }
+          </a>
+        </li>
+        }
         
         <li class="nav-item">
           <button class="btn btn-primary ms-2" (click)="abrirLoginModal()">

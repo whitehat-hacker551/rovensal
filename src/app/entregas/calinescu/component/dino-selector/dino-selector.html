@@ -9,29 +9,56 @@
 </div>
 
 <mat-dialog-content>
+  <div class="alert alert-info">
+    <mat-icon style="vertical-align: middle;">info</mat-icon>
+    <strong>Instrucciones:</strong> Haz click en "Seleccionar" para añadir un dinosaurio a tus favoritos.
+    Los dinosaurios con <mat-icon style="vertical-align: middle; color: #e91e63; font-size: 18px;">favorite</mat-icon> ya están en favoritos.
+  </div>
+  
   <div class="table-responsive">
     <table class="table table-hover">
       <thead class="table-dark">
         <tr>
+          <th style="width: 40px;"></th>
           <th>Dinosaurio</th>
           <th>Descripción</th>
-          <th class="text-center">Acción</th>
+          <th class="text-center" style="width: 150px;">Acción</th>
         </tr>
       </thead>
       <tbody>
         @for (dino of dinos; track $index) {
-          <tr>
-            <td class="fw-bold text-success">{{ dino.Name }}</td>
+          <tr [class.table-success]="esFavorito(dino.Name)">
+            <td class="text-center">
+              @if(esFavorito(dino.Name)) {
+                <mat-icon style="color: #e91e63;">favorite</mat-icon>
+              } @else {
+                <mat-icon style="color: #ccc;">favorite_border</mat-icon>
+              }
+            </td>
+            <td class="fw-bold" [class.text-success]="esFavorito(dino.Name)">
+              {{ dino.Name }}
+            </td>
             <td class="text-muted">{{ dino.Description }}</td>
             <td class="text-center">
-              <button 
-                mat-raised-button 
-                color="primary" 
-                (click)="selectDino(dino)"
-              >
-                <mat-icon>check_circle</mat-icon>
-                Seleccionar
-              </button>
+              @if(esFavorito(dino.Name)) {
+                <button 
+                  mat-raised-button 
+                  color="accent"
+                  disabled
+                >
+                  <mat-icon>check</mat-icon>
+                  Ya es favorito
+                </button>
+              } @else {
+                <button 
+                  mat-raised-button 
+                  color="primary" 
+                  (click)="selectDino(dino)"
+                >
+                  <mat-icon>add</mat-icon>
+                  Seleccionar
+                </button>
+              }
             </td>
           </tr>
         }
