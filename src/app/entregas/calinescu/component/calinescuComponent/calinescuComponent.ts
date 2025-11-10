@@ -138,12 +138,17 @@ export class CalinescuComponent {
    * Cierra la sesión del usuario actual.
    * Limpia todos los datos del usuario logueado y del dinosaurio favorito.
    * También limpia los favoritos del servicio.
+   * Redirige a la página de inicio de Calinescu.
    */
   cerrarSesion() {
     this.usuarioLogueado = null;
     this.nombreDinoFav = null;
     this.dinoFavorito = undefined;
     this.favoritosService.limpiarFavoritos();
+    
+    // Redirigir a la página de inicio después de cerrar sesión
+    this.router.navigate(['/calinescu']);
+    
     console.log('Sesión cerrada');
   }
 }
