@@ -34,6 +34,19 @@ export class Favoritos {
   }
 
   /**
+   * Hook que se ejecuta en cada ciclo de detección de cambios.
+   * Recarga los favoritos para mantenerlos actualizados en tiempo real.
+   */
+  ngDoCheck() {
+    // Recargar favoritos en cada ciclo de detección
+    // Esto asegura que siempre estén sincronizados con el servicio
+    const favoritosActuales = this.favoritosService.getFavoritos();
+    if (JSON.stringify(this.favoritos) !== JSON.stringify(favoritosActuales)) {
+      this.favoritos = favoritosActuales;
+    }
+  }
+
+  /**
    * Carga la lista actualizada de favoritos desde el servicio.
    * @example
    * this.cargarFavoritos();
