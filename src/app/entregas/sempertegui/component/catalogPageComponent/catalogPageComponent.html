@@ -1,0 +1,46 @@
+<nav class="d-flex justify-content-between">
+    <section class="content w-50">
+        <form (ngSubmit)="buscarProductos()" class="mb-2">
+            <input
+                type="search" 
+                placeholder="Buscador"
+                name="busqueda"
+                [(ngModel)]="terminoBusquedaSubmit"
+                (ngModelChange)="isChecked ? filtrarDinamico() : null"
+            />
+            <button type="submit">Buscar</button>
+        </form>
+        <mat-slide-toggle [(ngModel)]="isChecked">Búsqueda dinámica</mat-slide-toggle>
+    </section>
+    <section class="content d-flex align-items-center">
+        <div class="d-flex">
+            <mat-form-field  appearance="outline">
+                <mat-label>Categoría</mat-label>
+                <mat-select [(value)]="categoriaSeleccionada">
+                    @for (product of products; track product.id; let i = $index) {
+                        @if(i === 0 || product.category !== products[i - 1].category) {
+                            <mat-option [value]="product.category">{{product.category}}</mat-option>
+                        }
+                    }
+                </mat-select>
+            </mat-form-field>
+            @if(categoriaSeleccionada){
+                <button class="mx-2 mt-2" matFab aria-label="Borrar selección" (click)="clearSelection()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            }
+        </div>
+    </section>
+</nav>
+<section class="container">
+    <div class="d-flex aling-items-center mt-2">
+        <a href="sempertegui/home" id="volver">
+            <mat-icon aria-hidden="false" aria-label="Arrow left icon">arrow_back</mat-icon>
+        </a>
+        <label onclick="document.getElementById('volver').click()" class="ms-2" style="cursor:pointer">
+            Volver al Home
+        </label>
+    </div>
+    <h2 class="text-center mb-5">Catálogo de Productos</h2>
+    <app-product-list [terminoBusqueda]="terminoBusqueda" [categoriaSeleccionada]="categoriaSeleccionada" />
+</section>

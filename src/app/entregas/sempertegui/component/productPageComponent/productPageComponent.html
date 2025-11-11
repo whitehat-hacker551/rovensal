@@ -1,0 +1,130 @@
+<div class="d-flex aling-items-center mt-2">
+    <a href="sempertegui/catalog" id="volver">
+        <mat-icon aria-hidden="false" aria-label="Arrow left icon">arrow_back</mat-icon>
+    </a>
+    <label onclick="document.getElementById('volver').click()" class="ms-2" style="cursor:pointer">
+        Volver
+    </label>
+</div>
+
+<section class="d-flex flex-column flex-lg-row">
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-indicators">
+            @if(product && product.images && product.images.length > 1){
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
+                @for(img of product.images.slice(0, -1); track img; let i = $index){
+                    <button type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i + 1" class="bg-dark" [attr.aria-label]="'Slide '+ (i + 2)"></button>
+                }
+            }
+        </div>
+        <div class="carousel-inner">
+            @for(img of product.images; track img; let i = $index){
+                <div class="carousel-item {{ i === 0 ? 'active' : '' }}">
+                    <img [src]="img" class="d-block w-100" [alt]="product.title">
+                </div>
+            }
+        </div>
+        @if(product && product.images && product.images.length > 1){
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon text-dark" aria-hidden="false"><i class="bi bi-chevron-left"></i></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon text-dark" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        }
+    </div>
+    <div class="p-4 rounded-3" style="background-color: aliceblue">
+        <div>
+            <p class="fw-bold fs-5">
+                {{ product.title }} 
+                {{ product.brand ? (`- ${product.brand}`) : '' }}
+            </p>
+        </div>
+        <div>
+            <div class="d-flex fw-bold fs-5">
+                <p>{{product.price}} € </p>
+                <div class="mx-4">
+                    @for(star of [1,2,3,4,5]; track star; let i = $index){
+                        <span>
+                            <i class="bi text-warning"
+                                [class.bi-star-fill]="product.rating >= i + 1"
+                                [class.bi-star-half]="product.rating > i && product.rating < i + 1"
+                                [class.bi-star]="product.rating <= i">
+                            </i>
+                        </span>
+                    }
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>{{product.description}}</p>
+        </div>
+        <div class="d-flex">
+            <div class="d-inline-block w-25">
+                <span>Peso:</span>
+                <p>{{product.weight}} libras</p>
+            </div>
+            <div class="d-inline-block w-25 mx-5">
+                <span>Dimensiones:</span>
+                @if(product.dimensions){
+                    <p>{{product.dimensions.width}} inch<br>{{product.dimensions.height}} inch<br>{{product.dimensions.depth}} inch</p>
+                }
+            </div>
+        </div>
+        <div>
+            <span>Envios:</span>
+            <p>{{product.shippingInformation}}</p>
+        </div>
+        <div>
+            <span>Políticas de devolucíon:</span>
+            <p>{{product.returnPolicy}}</p>
+        </div>
+        <div>
+            <span>Código:</span>
+            <p>{{product.sku}}</p>
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="text-warning-emphasis">{{product.warrantyInformation}}</p>
+            @if(product.availabilityStatus === 'In Stock'){
+                <p class="text-success">{{product.availabilityStatus}}</p>
+            } @else {
+                <p class="text-danger">{{product.availabilityStatus}}</p>
+            }
+        </div>
+    </div>
+</section>
+<section class="container my-4 py-1 bg-primary-subtle rounded-3">
+
+    <h3 class="py-2 my-2">Reseñas de clientes</h3>
+
+     @for(review of product.reviews; track review){
+        <article class="card mb-3 comment-card p-3">
+            <div class="d-flex align-items-center mb-2">
+                <i class="bi bi-person-circle fs-3 me-2"></i>
+                <div>
+                    <strong>{{review.reviewerName}}</strong><br>
+                    <small class="text-muted">Publicado el: {{ review.date | date:'d \'de\' MMMM \'de\' y' : 'es-ES' }}</small>
+                </div>
+            </div>
+            <div class="mb-1">
+                @for(star of [1,2,3,4,5]; track star; let i = $index){
+                    <span>
+                        <i class="bi text-warning"
+                            [class.bi-star-fill]="review.rating >= i + 1"
+                            [class.bi-star-half]="review.rating > i && review.rating < i + 1"
+                            [class.bi-star]="review.rating <= i">
+                        </i>
+                    </span>
+                }
+            </div>
+            <p>{{review.comment}}</p>
+        </article>
+     } @empty {
+        <div class="d-flex flex-column align-items-center">
+            <h3 class="text-secondary">No hay comentarios todavía</h3>
+        </div>
+     }
+</section>
+

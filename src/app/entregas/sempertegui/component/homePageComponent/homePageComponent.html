@@ -1,0 +1,20 @@
+<div class="content d-flex flex-column justify-content-center">
+    <div class="d-flex flex-column row">
+        <div class="w-100 col-12 col-sm-8 col-md-6 col-lg-4">
+            <h1 class="text-center mb-5">Bienvenido a la Tienda Web de Ariel</h1>
+            <form class="d-flex justify-content-center" (ngSubmit)="buscarProductosRouted()">
+                <input 
+                    type="search" 
+                    placeholder="Busca un producto: Sofa" 
+                    [(ngModel)]="terminoBusqueda"
+                    name="busqueda"
+                />
+                <button type="submit">Buscar</button>
+            </form>
+            <div class="d-flex justify-content-center mt-5">
+              <a href="sempertegui/catalog" class="btn btn-primary">Ver catálogos</a>
+            </div>
+        </div>
+    </div>
+</div>
+

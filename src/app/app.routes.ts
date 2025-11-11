@@ -18,6 +18,10 @@ import { SilvestreComponent } from './entregas/silvestre/component/silvestreComp
 import { SoaresComponent } from './entregas/soares/component/soaresComponent/soaresComponent';
 import { UskiComponent } from './entregas/uski/component/uskiComponent/uskiComponent';
 import { ZanonComponent } from './entregas/zanon/component/zanonComponent/zanonComponent';
+import { HomePageComponent } from './entregas/sempertegui/component/homePageComponent/homePageComponent';
+import { CatalogPageComponent } from './entregas/sempertegui/component/catalogPageComponent/catalogPageComponent';
+import { ProductPageComponent } from './entregas/sempertegui/component/productPageComponent/productPageComponent';
+
 // Importar componentes hijos de soares
 import { HomeComponent } from './entregas/soares/soares/component/home/home.component';
 import { GamesComponent } from './entregas/soares/soares/component/games/games.component';
@@ -43,7 +47,14 @@ export const routes: Routes = [
     { path: 'pavon', component: PavonComponent },
     { path: 'reyna', component: ReynaComponent },
     { path: 'salinas', component: SalinasComponent },
-    { path: 'sempertegui', component: SemperteguiComponent },
+    { path: 'sempertegui', component: SemperteguiComponent,
+        children: [
+            { path: '', component: HomePageComponent },
+            { path: 'home', component: HomePageComponent },
+            { path: 'catalog', component: CatalogPageComponent },
+            { path: 'catalog/:id', component: ProductPageComponent }
+        ],
+    },
     { path: 'silvestre', component: SilvestreComponent },
     {
 path: 'soares',
