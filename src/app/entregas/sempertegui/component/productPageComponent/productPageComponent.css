@@ -1,0 +1,17 @@
+span{
+    font-weight: bold;
+}
+
+.comment-card {
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.comment-card p {
+  margin-bottom: 10px;
+}
+
+.comment-card button {
+  font-size: 0.85rem;
+}

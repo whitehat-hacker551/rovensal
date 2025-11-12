@@ -1,0 +1,45 @@
+<mat-card class="recipe-card" (contextmenu)="onContextMenu($event)">
+  <mat-card-header>
+    <mat-card-title class="d-flex align-items-center gap-2">
+      {{ recipe.title }}
+      <span [class]="difficultyBadge">{{ recipe.difficulty | titlecase }}</span>
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ recipe.mood | titlecase }} · {{ recipe.timeMinutes }} min · {{ recipe.servings }} raciones
+    </mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="recipe.image" [alt]="recipe.title" />
+  <mat-card-content>
+    <p class="text-muted mb-2">{{ recipe.description }}</p>
+    <div class="d-flex justify-content-between text-center stats">
+      <div>
+        <span class="label">Calorías</span>
+        <strong>{{ recipe.calories }}</strong>
+      </div>
+      <div>
+        <span class="label">Coste</span>
+        <strong>{{ recipe.costPerServing | currency: 'EUR' : 'symbol' : '1.0-2' }}</strong>
+      </div>
+      <div>
+        <span class="label">Favoritos</span>
+        <strong>{{ recipe.isFavorite ? 'Sí' : 'No' }}</strong>
+      </div>
+    </div>
+    <div class="mt-3 d-flex flex-wrap gap-1">
+      @for (tag of recipe.tags; track tag) {
+        <mat-chip-row color="primary" selected>{{ tag }}</mat-chip-row>
+      }
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="d-flex justify-content-between align-items-center">
+    <button mat-flat-button color="primary" (click)="view.emit(recipe)">
+      <i class="bi bi-eye me-1"></i> Ver receta
+    </button>
+    <button mat-icon-button [color]="recipe.isFavorite ? 'warn' : undefined" (click)="favorite.emit(recipe)" matTooltip="Favorito">
+      <mat-icon>{{ recipe.isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
+    </button>
+  </mat-card-actions>
+  <div class="context-hint mb-2">
+    <i class="bi bi-mouse3"></i> Clic derecho para más acciones
+  </div>
+</mat-card>

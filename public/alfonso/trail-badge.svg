@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320">
+  <defs>
+    <linearGradient id="badge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#45b7af" />
+      <stop offset="100%" stop-color="#197278" />
+    </linearGradient>
+  </defs>
+  <circle cx="160" cy="160" r="150" fill="url(#badge)" />
+  <path d="M70 220 L125 150 L160 190 L200 140 L250 220 Z" fill="none" stroke="#fefae0" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="125" cy="150" r="10" fill="#fefae0"/>
+  <circle cx="200" cy="140" r="10" fill="#fefae0"/>
+  <text x="160" y="90" fill="#fefae0" font-size="46" font-family="Poppins, Arial, sans-serif" text-anchor="middle">
+    A·LAB
+  </text>
+  <text x="160" y="280" fill="#fefae0" font-size="22" font-family="Poppins, Arial, sans-serif" text-anchor="middle" letter-spacing="6">
+    EXPLORE
+  </text>
+</svg>

@@ -1,0 +1,43 @@
+.supplier-dialog {
+  max-height: 85vh;
+}
+
+.supplier-wrapper {
+  max-height: 560px;
+  overflow-y: auto;
+}
+
+.supplier-list .mat-mdc-list-item {
+  border-radius: 1.6rem;
+  margin-bottom: 1.75rem;
+  border: 1px solid rgba(25, 118, 210, 0.35);
+  padding: 1.75rem;
+  min-height: 210px;
+}
+
+.supplier-option.selected {
+  border-color: rgba(255, 193, 7, 1);
+  box-shadow: 0 0 0 5px rgba(255, 193, 7, 0.25);
+}
+
+.supplier-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.supplier-body {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.3rem;
+  margin-top: 1.3rem;
+}
+
+.supplier-tags {
+  margin-top: 1.1rem;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}

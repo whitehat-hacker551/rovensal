@@ -1,2 +1,230 @@
-<h2>Entrega Alfonso</h2>
+<section class="alfonso-hero mb-4">
+  <div class="hero-overlay">
+    <p class="text-uppercase small mb-2">Cocina colaborativa · Alfonso Lab</p>
+    <h1>Gestiona tu laboratorio gastronómico</h1>
+    <p class="lead">Recetas sincronizadas, proveedores fiables y mise en place compartida para no perder ningún servicio.</p>
+    <div class="btn-group" role="group" aria-label="estado culinario">
+      @for (mood of moods; track mood.id) {
+        <input
+          type="radio"
+          class="btn-check"
+          name="mood"
+          [id]="mood.id"
+          [value]="mood.id"
+          [(ngModel)]="moodModel"
+          (ngModelChange)="updateMood($event)"
+        />
+        <label class="btn btn-outline-light" [for]="mood.id">{{ mood.label }}</label>
+      }
+    </div>
+    <div class="mt-3 d-flex gap-2 flex-wrap">
+      <button class="btn btn-warning" routerLink="/alfonso/menu"><i class="bi bi-calendar-week"></i> Agenda semanal</button>
+      <button class="btn btn-outline-light" routerLink="/alfonso/stock"><i class="bi bi-box-seam"></i> Inventario vivo</button>
+    </div>
+  </div>
+  <img src="/alfonso/hero.svg" alt="Hero Alfonso Kitchen" class="hero-image" />
+</section>
 
+<section class="row g-3 mb-4">
+  @for (stat of heroStats(); track stat.label) {
+    <div class="col-md-4">
+      <div class="stat-card">
+        <p class="label text-uppercase small">{{ stat.label }}</p>
+        <p class="value">{{ stat.value }}</p>
+      </div>
+    </div>
+  }
+</section>
+
+<section class="row g-4 mb-4">
+  <div class="col-lg-7">
+    <form class="card shadow-sm p-4 h-100" [formGroup]="filterForm">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h5 class="mb-0">Recetario inteligente</h5>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="resetFilters()">Restablecer</button>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Buscar</mat-label>
+            <input matInput placeholder="pan brioche" formControlName="term" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Dificultad</mat-label>
+            <mat-select formControlName="difficulty">
+              <mat-option value="todas">Todas</mat-option>
+              <mat-option value="fácil">Fácil</mat-option>
+              <mat-option value="media">Media</mat-option>
+              <mat-option value="retadora">Retadora</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="mood">
+              <mat-option value="todas">Todos</mat-option>
+              <mat-option value="dulce">Dulce</mat-option>
+              <mat-option value="salado">Salado</mat-option>
+              <mat-option value="exprés">Exprés</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12">
+          <label class="form-label d-flex justify-content-between">
+            <span>Tiempo máximo</span>
+            <span>{{ filterForm.value.maxTime }} min</span>
+          </label>
+          <mat-slider min="10" max="120" step="5">
+            <input matSliderThumb formControlName="maxTime" aria-label="Tiempo máximo" />
+          </mat-slider>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-lg-5">
+    <form class="card shadow-sm p-4 h-100" [formGroup]="planForm" (ngSubmit)="submitPlan()">
+      <h5>Planificación rápida</h5>
+      <mat-form-field appearance="outline" class="w-100 mt-3">
+        <mat-label>Receta</mat-label>
+        <mat-select formControlName="recipeId" required>
+          @for (recipe of recipes(); track recipe.id) {
+            <mat-option [value]="recipe.id">{{ recipe.title }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Día</mat-label>
+            <mat-select formControlName="day">
+              @for (day of days; track day) {
+                <mat-option [value]="day">{{ day }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Servicio</mat-label>
+            <mat-select formControlName="service">
+              @for (service of services; track service) {
+                <mat-option [value]="service">{{ service | titlecase }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Comensales</mat-label>
+        <input matInput type="number" formControlName="diners" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Proveedor</mat-label>
+        <input matInput formControlName="supplierName" readonly placeholder="Selecciona proveedor" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Notas</mat-label>
+        <textarea matInput rows="2" formControlName="notes"></textarea>
+      </mat-form-field>
+      <div class="d-flex gap-2 flex-wrap">
+        <button type="button" class="btn btn-outline-info" (click)="openSupplierSelector()">
+          <i class="bi bi-truck"></i> Proveedores
+        </button>
+        <button type="button" class="btn btn-outline-dark" (click)="loadInspirations()">
+          @if (!inspirationsLoading()) {
+            <span><i class="bi bi-stars"></i> Inspiraciones</span>
+          } @else {
+            <mat-spinner diameter="18"></mat-spinner>
+          }
+        </button>
+        <button type="submit" class="btn btn-primary ms-auto">
+          <i class="bi bi-send"></i> Guardar plan
+        </button>
+      </div>
+      @if (lastPlanSummary()) {
+        <div class="alert alert-success mt-3">
+          {{ lastPlanSummary() }}
+        </div>
+      }
+    </form>
+  </div>
+</section>
+
+<section class="recipes-section mt-4">
+  <div class="recipes-header d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+    <div>
+      <p class="text-uppercase small text-muted mb-1">Recetario Alfonso</p>
+      <h4 class="mb-0">Selección destacada</h4>
+    </div>
+    <span class="badge text-bg-light text-dark">{{ filteredRecipes().length }} recetas</span>
+  </div>
+  @if (loadingRecipes()) {
+    <div class="text-center py-5">
+      <mat-spinner diameter="56"></mat-spinner>
+      <p class="mt-3 text-muted">Activando hornos...</p>
+    </div>
+  } @else {
+    @if (filteredRecipes().length) {
+      <div class="recipe-grid">
+        @for (recipe of filteredRecipes(); track recipe.id) {
+          <app-alfonso-recipe-card
+            [recipe]="recipe"
+            (view)="openRecipeDialog($event)"
+            (favorite)="toggleFavorite($event)"
+            (contextMenu)="onRecipeContext($event)"
+          ></app-alfonso-recipe-card>
+        }
+      </div>
+    } @else {
+      <div class="alert alert-warning">No hay coincidencias con los filtros actuales.</div>
+    }
+  }
+</section>
+
+<section class="row g-3 checklist-section mt-4">
+  <div class="col-12 col-xl-8 mx-auto">
+    <app-alfonso-checklist
+      title="Checklist de mise en place"
+      [items]="checklist"
+      (toggled)="onChecklistToggle($event)"
+    ></app-alfonso-checklist>
+  </div>
+</section>
+
+<section class="vegano-panel mt-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <div>
+      <p class="text-uppercase small mb-1">Vitrina verde</p>
+      <h4 class="mb-0">Selección vegana lista para servicio</h4>
+    </div>
+    <span class="badge text-bg-light text-dark">{{ veganShowcase().length }} propuestas</span>
+  </div>
+  <div class="row g-3">
+    @for (recipe of veganShowcase(); track recipe.id) {
+      <div class="col-md-6 col-lg-3">
+        <div class="vegano-card h-100">
+          <img [src]="recipe.image" [alt]="recipe.title" />
+          <div class="content">
+            <h6>{{ recipe.title }}</h6>
+            <p class="small text-muted mb-2">{{ recipe.timeMinutes }} min · {{ recipe.servings }} raciones</p>
+            <button class="btn btn-sm btn-outline-light w-100" (click)="openRecipeDialog(recipe)">
+              Ver mise en place
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<app-alfonso-context-menu
+  [visible]="contextMenuState().visible"
+  [x]="contextMenuState().x"
+  [y]="contextMenuState().y"
+  [actions]="contextActions()"
+  (actionSelected)="handleContextAction($event)"
+  (dismissed)="hideContextMenu()"
+></app-alfonso-context-menu>

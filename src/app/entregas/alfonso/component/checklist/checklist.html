@@ -1,0 +1,26 @@
+<div class="alfonso-checklist">
+  <div class="header d-flex justify-content-between align-items-center">
+    <h6 class="mb-0">{{ title }}</h6>
+    <span class="badge bg-dark-subtle text-dark-emphasis">{{ items.length }} ítems</span>
+  </div>
+  <ul class="list-group list-group-flush mt-3">
+    @for (item of items; track item.id) {
+      <li
+        class="list-group-item d-flex justify-content-between align-items-start gap-3"
+        [class.list-group-item-success]="item.completed"
+        [class.list-group-item-danger]="item.critical && !item.completed"
+      >
+        <div class="form-check flex-grow-1">
+          <input class="form-check-input mt-0" type="checkbox" [(ngModel)]="item.completed" (change)="onToggle(item)" />
+          <label class="form-check-label fw-semibold">{{ item.label }}</label>
+          @if (item.notes) {
+            <p class="small text-muted mb-0">{{ item.notes }}</p>
+          }
+        </div>
+        <span class="badge rounded-pill" [class.bg-danger]="item.critical" [class.bg-success]="!item.critical">
+          {{ item.critical ? 'crítico' : 'sugerido' }}
+        </span>
+      </li>
+    }
+  </ul>
+</div>

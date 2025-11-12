@@ -1,0 +1,14 @@
+.alfonso-checklist {
+  border-radius: 1rem;
+  border: 1px dashed rgba(69, 183, 175, 0.6);
+  padding: 1rem 1.25rem;
+  background: #f8fffe;
+  min-height: 100%;
+}
+
+.alfonso-checklist .list-group-item {
+  border: none;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+}

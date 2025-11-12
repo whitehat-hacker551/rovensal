@@ -1,0 +1,262 @@
+.header {
+  background: linear-gradient(135deg, #17408B 0%, #0d2a5c 100%);
+  border-bottom: 3px solid #C9082A;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(23, 64, 139, 0.3);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nba-logo {
+  width: 75px;
+  height: 75px;
+  object-fit: contain;
+}
+
+.logo-section h1 {
+  font-size: 1.8rem;
+  color: white;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.nav-desktop {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-desktop a {
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-desktop a:hover {
+  color: white;
+  background-color: rgba(201, 8, 42, 0.2);
+}
+
+.nav-desktop a.active {
+  color: white;
+  border-bottom: 2px solid #C9082A;
+}
+
+.nav-desktop a.quiz-link {
+  background: linear-gradient(135deg, #C9082A 0%, #9a0620 100%);
+  color: white;
+  font-weight: 700;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+}
+
+.nav-desktop a.quiz-link:hover {
+  background: linear-gradient(135deg, #17408B 0%, #0d2a5c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 8, 42, 0.4);
+}
+
+.nav-desktop a.calendar-link {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+  color: white;
+  font-weight: 700;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+}
+
+.nav-desktop a.calendar-link:hover {
+  background: linear-gradient(135deg, #2f855a 0%, #38a169 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(56, 161, 105, 0.4);
+}
+
+.nav-desktop a.ranking-link {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #333;
+  font-weight: 700;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  text-shadow: none;
+}
+
+.nav-desktop a.ranking-link:hover {
+  background: linear-gradient(135deg, #ffed4e 0%, #ffd700 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-name {
+  color: white;
+  font-weight: 600;
+}
+
+.btn-logout {
+  padding: 0.6rem 1.2rem;
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 6px;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.nav-mobile {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #0d2a5c 0%, #17408B 100%);
+  border-top: 1px solid #C9082A;
+}
+
+.nav-mobile a {
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-mobile a:hover {
+  color: white;
+  background-color: rgba(201, 8, 42, 0.2);
+}
+
+.nav-mobile a.active {
+  color: white;
+  border-left: 3px solid #C9082A;
+  padding-left: calc(1rem - 3px);
+}
+
+.nav-mobile a.quiz-link {
+  background: linear-gradient(135deg, #C9082A 0%, #9a0620 100%);
+  color: white;
+  font-weight: 700;
+}
+
+.nav-mobile a.calendar-link {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+  color: white;
+  font-weight: 700;
+}
+
+.nav-mobile a.ranking-link {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #333;
+  font-weight: 700;
+}
+
+.btn-logout-mobile {
+  padding: 0.7rem 1rem;
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-logout-mobile:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.author-credits {
+  text-align: center;
+  padding: 0.5rem 0;
+  background: linear-gradient(135deg, #0d2a5c 0%, #17408B 100%);
+  border-top: 1px solid #C9082A;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.author-credits p {
+  margin: 0;
+  color: white;
+}
+
+.author-credits strong {
+  color: #C9082A;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 1rem;
+  }
+
+  .logo-section h1 {
+    font-size: 1.3rem;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .user-section {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-mobile {
+    display: flex;
+  }
+
+  .nba-logo {
+    width: 40px;
+    height: 40px;
+  }
+}

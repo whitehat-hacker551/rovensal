@@ -1,0 +1,414 @@
+/* Ranking Container */
+.ranking-container {
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+}
+
+/* Header Styles */
+.ranking-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px 0;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(30, 58, 138, 0.3);
+}
+
+.ranking-header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.ranking-header p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+.ranking-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stats-display {
+    background: rgba(255,255,255,0.2);
+    padding: 10px 20px;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Winner Section */
+.winner-section {
+    margin-bottom: 40px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Player Vote Cards */
+.player-vote-card {
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.player-vote-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.position-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 20px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.rank-1 { background: linear-gradient(45deg, #ffd700, #ffed4e); color: #333; }
+.rank-2 { background: linear-gradient(45deg, #c0c0c0, #e5e5e5); color: #333; }
+.rank-3 { background: linear-gradient(45deg, #cd7f32, #daa520); }
+.rank-4, .rank-5, .rank-6, .rank-7, .rank-8, .rank-9, .rank-10 { 
+    background: linear-gradient(45deg, #6c757d, #adb5bd); 
+}
+
+/* Player Header */
+.player-header {
+    position: relative;
+    height: 320px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: none;
+}
+
+.player-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.vote-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(30, 58, 138, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: white;
+    font-weight: bold;
+}
+
+.player-vote-card:hover .vote-overlay {
+    opacity: 1;
+}
+
+.vote-overlay i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.vote-overlay span {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Player Info */
+.player-info {
+    padding: 25px;
+    text-align: center;
+}
+
+.player-info h3 {
+    color: #1e3a8a;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.player-info .team {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.player-info .position {
+    margin-bottom: 20px;
+}
+
+.vote-stats .badge {
+    font-size: 1rem;
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+/* Leaderboard Section */
+.leaderboard-section {
+    margin-top: 60px;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.leaderboard-section h3 {
+    color: #1e3a8a;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+.leaderboard-avatar {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #e9ecef;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ranking-header h1 {
+        font-size: 2rem;
+    }
+    
+    .ranking-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .player-header {
+        height: 220px;
+    }
+    
+    .player-image {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .vote-overlay i {
+        font-size: 2rem;
+    }
+    
+    .leaderboard-section {
+        padding: 20px;
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 576px) {
+    .ranking-container {
+        padding: 10px;
+    }
+    
+    .ranking-header {
+        padding: 20px 15px;
+        margin-bottom: 30px;
+    }
+    
+    .ranking-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .player-header {
+        height: 200px;
+    }
+    
+    .player-image {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* === CAROUSEL STYLES === */
+
+/* Carousel Container */
+.carousel-container {
+    margin: 40px 0;
+    padding: 20px;
+}
+
+.carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Carousel Content */
+.carousel-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    max-width: 400px;
+}
+
+.carousel-content .player-vote-card {
+    width: 100%;
+    max-width: 350px;
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Carousel Navigation Buttons */
+.carousel-btn {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    border: none;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+    font-size: 1.2rem;
+}
+
+.carousel-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+}
+
+.carousel-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: scale(0.9);
+}
+
+.carousel-btn i {
+    font-size: 1.4rem;
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.indicator-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(30, 58, 138, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator-dot.active {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    transform: scale(1.3);
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.4);
+}
+
+.indicator-dot:hover:not(.active) {
+    background: rgba(30, 58, 138, 0.6);
+    transform: scale(1.1);
+}
+
+/* Responsive Carousel */
+@media (max-width: 768px) {
+    .carousel-wrapper {
+        gap: 15px;
+        padding: 0 10px;
+    }
+    
+    .carousel-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+    
+    .carousel-btn i {
+        font-size: 1.2rem;
+    }
+    
+    .carousel-content .player-vote-card {
+        max-width: 280px;
+        transform: scale(1);
+    }
+    
+    .carousel-content .player-header {
+        height: 250px;
+    }
+    
+    .carousel-content .player-image {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .carousel-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 0.9rem;
+    }
+    
+    .carousel-content .player-vote-card {
+        max-width: 250px;
+    }
+    
+    .carousel-content .player-header {
+        height: 220px;
+    }
+    
+    .carousel-content .player-image {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .carousel-indicators {
+        margin-top: 20px;
+    }
+    
+    .indicator-dot {
+        width: 10px;
+        height: 10px;
+    }
+}

@@ -1,0 +1,35 @@
+<header class="header">
+  <div class="header-container">
+    <div class="logo-section">
+      <img src="/soares/soares-nba-logo.svg" alt="NBA Logo" class="nba-logo"
+        style="max-width: 120px; width: 100%; height: auto; margin-right: 1rem;">
+      <h1 style="font-size: 2.8rem; margin: 0; color: #17408B;">NBA</h1>
+    </div>
+
+    <nav class="nav-desktop">
+      <a routerLink="/soares/home" routerLinkActive="active">Inicio</a>
+      <a routerLink="/soares/teams" routerLinkActive="active">Equipos</a>
+      <a routerLink="/soares/statistics" routerLinkActive="active">Estadísticas</a>
+      <a routerLink="/soares/games" routerLinkActive="active">Juegos</a>
+      <a routerLink="/soares/quiz" routerLinkActive="active">Quiz</a>
+      <a routerLink="/soares/ranking" routerLinkActive="active">Top 10</a>
+    </nav>
+
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  @if (menuOpen) {
+  <nav class="nav-mobile">
+    <a routerLink="/soares/home" (click)="closeMenu()" routerLinkActive="active">Inicio</a>
+    <a routerLink="/soares/teams" (click)="closeMenu()" routerLinkActive="active">Equipos</a>
+    <a routerLink="/soares/statistics" (click)="closeMenu()" routerLinkActive="active">Estadísticas</a>
+    <a routerLink="/soares/games" (click)="closeMenu()" routerLinkActive="active">Juegos</a>
+    <a routerLink="/soares/quiz" (click)="closeMenu()" routerLinkActive="active">Quiz</a>
+    <a routerLink="/soares/ranking" (click)="closeMenu()" routerLinkActive="active">Top 10</a>
+  </nav>
+  }
+</header>

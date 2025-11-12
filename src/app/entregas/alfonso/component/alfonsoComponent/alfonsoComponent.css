@@ -1,2 +1,91 @@
-/* Styles for AlfonsoComponent */
-h2 { color: #2a6f97; }
+.alfonso-hero {
+  position: relative;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  min-height: 320px;
+  background: radial-gradient(circle at top right, rgba(255, 193, 7, 0.45), rgba(33, 37, 41, 0.85));
+  color: #fffdf7;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 1;
+  padding: 2.5rem;
+  max-width: 60%;
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+}
+
+.stat-card {
+  border-radius: 1rem;
+  padding: 1.25rem;
+  background-color: #fff;
+  border: 1px solid rgba(33, 37, 41, 0.08);
+}
+
+.stat-card .label {
+  letter-spacing: 0.05em;
+  color: #6c757d;
+}
+
+.stat-card .value {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+mat-form-field {
+  --mdc-outlined-text-field-outline-color: rgba(255, 159, 67, 0.35);
+}
+
+.vegano-panel {
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #f8fbff;
+}
+
+.vegano-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.vegano-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.vegano-card .content {
+  padding: 0.75rem 0.9rem 1rem;
+  flex: 1;
+}
+
+.recipes-section {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.checklist-section .alfonso-checklist {
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}

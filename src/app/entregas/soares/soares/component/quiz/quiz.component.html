@@ -1,0 +1,87 @@
+<div class="quiz-container soares-section-bg" style="background: #e3eafc; min-height: 100vh;">
+  <h1>🏀 Quiz NBA</h1>
+
+  <!-- Pantalla de inicio -->
+  @if (!isQuizActive && !isQuizCompleted) {
+  <div class="quiz-start">
+    <div class="start-content">
+      <h2>¿Cuánto sabes de la NBA?</h2>
+      <p>Pon a prueba tus conocimientos sobre la historia, récords y datos de la NBA.</p>
+      <button (click)="startQuiz()" class="btn btn-start">Iniciar Quiz</button>
+    </div>
+  </div>
+  }
+
+  <!-- Pantalla de quiz activo -->
+  @if (isQuizActive) {
+  <div class="quiz-active">
+    <div class="quiz-header">
+      <div class="progress">
+        <span>Pregunta {{ currentQuestionIndex + 1 }} de {{ totalQuestions }}</span>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+        </div>
+      </div>
+      <div class="score">
+        <span>Puntuación: {{ score }}/{{ totalQuestions }}</span>
+      </div>
+    </div>
+
+    <div class="question-container">
+      @if (currentQuestion) {
+      <div>
+        <h2 class="question-text">{{ currentQuestion.question }}</h2>
+
+        <div class="options">
+          @for (option of currentQuestion.options; track $index) {
+          <button (click)="selectAnswer($index)" [disabled]="selectedAnswer !== null"
+            [class.selected]="selectedAnswer === $index" [class.correct]="selectedAnswer === $index && isCorrect"
+            [class.incorrect]="selectedAnswer === $index && !isCorrect" class="option-btn">
+            <span class="option-letter">{{ getOptionLetter($index) }}</span>
+            <span class="option-text">{{ option }}</span>
+          </button>
+          }
+        </div>
+
+        <!-- Feedback -->
+        @if (showFeedback) {
+        <div class="feedback" [class.correct]="isCorrect">
+          <p>{{ feedbackMessage }}</p>
+          <button (click)="nextQuestion()" class="btn btn-next">
+            {{ currentQuestionIndex + 1 === totalQuestions ? 'Ver Resultados' : 'Siguiente Pregunta' }}
+          </button>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- Pantalla de resultados -->
+  @if (isQuizCompleted) {
+  <div class="quiz-results">
+    <div class="results-content">
+      <h2>¡Quiz Completado!</h2>
+      <div class="score-display">
+        <div class="score-circle">
+          <span class="percentage">{{ getScorePercentage() }}%</span>
+        </div>
+        <p class="score-text">Obtuviste {{ score }} de {{ totalQuestions }} respuestas correctas</p>
+      </div>
+
+      <div class="result-message">
+        @if (getScorePercentage() >= 80) {
+        <p class="excellent">¡Excelente! Eres un verdadero experto en NBA 🏆</p>
+        } @else if (getScorePercentage() >= 60) {
+        <p class="good">¡Muy bien! Tienes buenos conocimientos de NBA 👍</p>
+        } @else {
+        <p class="fair">Buen intento. ¡Aprende más sobre NBA! 📚</p>
+        }
+      </div>
+
+      <button (click)="resetQuiz()" class="btn btn-restart">Jugar de Nuevo</button>
+    </div>
+  </div>
+  }
+</div>

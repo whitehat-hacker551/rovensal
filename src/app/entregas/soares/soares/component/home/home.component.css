@@ -1,0 +1,115 @@
+/* Home component - CSS mínimo solo para animaciones */
+
+.home-container {
+  min-height: 100vh;
+}
+
+/* Animación general de entrada */
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Solo mantener las animaciones esenciales */
+.slide-in-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.slide-in-left:nth-child(1) { animation-delay: 0.1s; }
+.slide-in-left:nth-child(2) { animation-delay: 0.2s; }
+.slide-in-left:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Estilos para cards de jugadores compactas */
+.card-nba-player {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-nba-player:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.player-avatar-small {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+.avatar-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.avatar-fallback {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.stat-mini {
+  padding: 0.25rem;
+}
+
+.stat-mini strong {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.stat-mini small {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .player-avatar-small, .avatar-img, .avatar-fallback {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .avatar-fallback {
+    font-size: 1.2rem;
+  }
+  
+  .stat-mini strong {
+    font-size: 1rem;
+  }
+}

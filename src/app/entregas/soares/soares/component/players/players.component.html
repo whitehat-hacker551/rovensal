@@ -1,0 +1,58 @@
+<<!-- Modal de Jugadores -->
+  <div class="modal-overlay" *ngIf="show" (click)="onOverlayClick($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="team-info">
+          <img [src]="team.logo" [alt]="team.name" class="team-logo" *ngIf="team.logo">
+          <div class="team-details">
+            <h2>{{ team.city }} {{ team.name }}</h2>
+            <p class="team-conference">{{ team.conference }} Conference | {{ team.division }} Division</p>
+          </div>
+        </div>
+        <button class="close-btn" (click)="closeModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Lista de jugadores -->
+        <div class="players-container">
+          <div class="players-grid">
+            <div *ngFor="let player of team.players" class="player-card" (click)="selectPlayer(player)">
+
+              <div class="player-image-container">
+                <img [src]="player.teamLogo" [alt]="player.team + ' logo'" class="team-logo-small"
+                  onerror="this.src='https://via.placeholder.com/40x40?text=NBA'">
+                <div class="jersey-number">#{{ player.jerseyNumber }}</div>
+                <div class="allstar-badge" *ngIf="player.isAllStar">
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+
+              <div class="player-info">
+                <h4 class="player-name">{{ player.name }}</h4>
+                <p class="player-team">{{ player.team }}</p>
+                <div class="player-stats">
+                  <div class="stat-item">
+                    <span class="stat-label">PPG</span>
+                    <span class="stat-value">{{ player.pointsPerGame }}</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-label">APG</span>
+                    <span class="stat-value">{{ player.assistsPerGame }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sin resultados -->
+          <div *ngIf="team.players?.length === 0" class="no-results">
+            <i class="fas fa-search"></i>
+            <p>No se encontraron jugadores</p>
+            <small>Este equipo no tiene jugadores cargados</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

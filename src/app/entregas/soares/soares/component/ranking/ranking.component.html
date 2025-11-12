@@ -1,0 +1,125 @@
+<div class="ranking-container soares-section-bg">
+    <div class="ranking-header">
+        <h1><i class="fas fa-trophy text-warning"></i> {{ title }}</h1>
+        <p>¡Vota por tu estrella favorita entre los mejores jugadores de la NBA!</p>
+
+        <div class="ranking-controls">
+            <div class="stats-display">
+                <i class="fas fa-users text-nba-blue"></i>
+                <span>Total Votos: <strong>{{ totalVotes }}</strong></span>
+            </div>
+            <button class="btn btn-outline-danger btn-sm" (click)="resetVotes()">
+                <i class="fas fa-redo"></i> Resetear Votos
+            </button>
+        </div>
+    </div>
+
+    <!-- Winner Banner -->
+    <div class="winner-section" *ngIf="topVoted && topVoted.votes > 0">
+        <div class="alert alert-danger text-center">
+            <h4>
+                <i class="fas fa-crown text-warning"></i>
+                LÍDER ACTUAL: {{ topVoted.name }}
+                <i class="fas fa-crown text-warning"></i>
+            </h4>
+            <p class="mb-0">{{ topVoted.team }} - {{ topVoted.votes }} votos</p>
+        </div>
+    </div>
+
+    <!-- Player Carousel -->
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <!-- Previous Button -->
+            <button class="carousel-btn carousel-btn-prev" (click)="previousPlayer()"
+                [disabled]="currentPlayerIndex === 0">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Current Player Card -->
+            <div class="carousel-content">
+                <div class="player-vote-card card shadow-lg" (click)="openVoteModal(currentPlayer)"
+                    *ngIf="currentPlayer">
+                    <div class="position-badge rank-{{ currentPlayerIndex + 1 }}">
+                        #{{ currentPlayerIndex + 1 }}
+                    </div>
+                    <div class="card-header player-header">
+                        <img [src]="currentPlayer.image" [alt]="currentPlayer.name" class="player-image"
+                            onerror="this.src='https://via.placeholder.com/300x300?text=No+Image'">
+                        <div class="vote-overlay">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span>Votar</span>
+                        </div>
+                    </div>
+                    <div class="card-body player-info">
+                        <h3>{{ currentPlayer.name }}</h3>
+                        <p class="team text-nba-blue">
+                            <i class="fas fa-basketball-ball"></i> {{ currentPlayer.team }}
+                        </p>
+                        <p class="position text-muted">
+                            <i class="fas fa-user"></i> {{ currentPlayer.position }}
+                        </p>
+                        <div class="vote-stats">
+                            <span class="badge bg-warning text-dark">
+                                <i class="fas fa-star"></i> {{ currentPlayer.votes }} votos
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Next Button -->
+            <button class="carousel-btn carousel-btn-next" (click)="nextPlayer()"
+                [disabled]="currentPlayerIndex === players.length - 1">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            <button *ngFor="let player of players; let i = index" class="indicator-dot"
+                [class.active]="i === currentPlayerIndex" (click)="goToPlayer(i)">
+            </button>
+        </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="leaderboard-section">
+        <h3><i class="fas fa-chart-bar text-nba-blue"></i> Tabla de Posiciones</h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Jugador</th>
+                        <th>Votos</th>
+                        <th>%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let player of sortedPlayers; let i = index"
+                        [class.table-danger]="i === 0 && player.votes > 0">
+                        <td><strong>{{ i + 1 }}</strong></td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img [src]="player.image" [alt]="player.name" class="leaderboard-avatar me-2">
+                                <div>
+                                    <strong>{{ player.name }}</strong>
+                                    <br><small class="text-muted">{{ player.team }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge" style="background-color: var(--nba-blue); color: white;">{{ player.votes
+                                }}</span></td>
+                        <td><span class="text-success">{{ totalVotes > 0 ? ((player.votes / totalVotes) *
+                                100).toFixed(1) : 0 }}%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Vote Modal Component -->
+<app-vote-modal [player]="selectedPlayer" [show]="showVoteModal" (voteConfirmed)="onVoteConfirmed($event)"
+    (modalClosed)="closeVoteModal()">
+</app-vote-modal>

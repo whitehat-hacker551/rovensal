@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<mat-dialog-content>
+    @if(data.brand){
+        <span>Marca:</span>
+        <p>{{data.brand}}</p>
+    }
+    <span>Descripción:</span>
+    <p>{{data.description}}</p>
+    <div class="d-flex">
+        <div class="d-inline-block w-25">
+            <span>Peso:</span>
+            <p>{{data.weight}} libras</p>
+        </div>
+        <div class="d-inline-block w-25 mx-5">
+            <span>Dimensiones:</span>
+            <p>{{data.dimensions.width}} inch<br>{{data.dimensions.height}} inch<br>{{data.dimensions.depth}} inch</p>
+        </div>
+    </div>
+    <span>Código:</span>
+    <p>{{data.sku}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matButton mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

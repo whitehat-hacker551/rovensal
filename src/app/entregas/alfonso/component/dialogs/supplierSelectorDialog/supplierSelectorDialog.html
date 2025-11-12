@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>Selecciona proveedor</h2>
+<mat-dialog-content class="supplier-dialog">
+  <div class="btn-group flex-wrap mb-3">
+    @for (specialty of specialties; track specialty) {
+      <button
+        type="button"
+        class="btn btn-sm"
+        [class.btn-primary]="activeSpecialty() === specialty"
+        [class.btn-outline-primary]="activeSpecialty() !== specialty"
+        (click)="setSpecialty(specialty)"
+      >
+        {{ specialty | titlecase }}
+      </button>
+    }
+  </div>
+
+  <div class="supplier-wrapper">
+    @if (suppliers$ | async; as suppliers) {
+      <mat-selection-list class="supplier-list">
+        @for (supplier of suppliers; track supplier.id) {
+          <mat-list-option
+            class="supplier-option"
+            [selected]="selectedSupplier?.id === supplier.id"
+            (click)="select(supplier)"
+          >
+            <div class="supplier-header">
+              <div>
+                <strong>{{ supplier.name }}</strong>
+                <p class="mb-0 text-muted small">
+                  Especialidad: {{ supplier.specialty | uppercase }} · Lead {{ supplier.leadTimeDays }} días
+                </p>
+              </div>
+              <div class="text-end">
+                <span class="badge text-bg-dark">{{ supplier.rating }}/5 ⭐</span>
+              </div>
+            </div>
+            <div class="supplier-body">
+              <div>
+                <p class="mb-1 small text-muted">Entrega: {{ supplier.deliveryDays.join(', ') }}</p>
+                <p class="mb-1 small fw-semibold">Pedido mínimo: {{ supplier.minOrder | currency: 'EUR' : 'symbol' : '1.0-0' }}</p>
+              </div>
+              <div class="small text-muted">
+                Contacto: <span class="fw-semibold">{{ supplier.contact }}</span>
+              </div>
+            </div>
+            <div class="supplier-tags">
+              @for (product of supplier.highlightedProducts; track product) {
+                <span class="badge text-bg-light text-dark">{{ product }}</span>
+              }
+            </div>
+          </mat-list-option>
+        }
+      </mat-selection-list>
+    } @else {
+      <div class="text-center py-4">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>Cancelar</button>
+  <button mat-flat-button color="primary" [disabled]="!selectedSupplier" (click)="confirm()">Añadir al pedido</button>
+</mat-dialog-actions>

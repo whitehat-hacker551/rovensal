@@ -1,0 +1,102 @@
+<div class="statistics-container soares-section-bg" style="background: #e3eafc; min-height: 100vh;">
+  <h1>Estadísticas de la NBA</h1>
+
+  <!-- Cards de Categorías -->
+  <div class="stats-categories row justify-content-center align-items-center mb-4">
+    <div class="col-12 col-lg-3 mb-0 d-flex justify-content-center">
+      <div class="category-card d-flex flex-column justify-content-center align-items-center p-4 shadow-lg rounded"
+        [class.active]="selectedCategory === 'points'" (click)="selectCategory('points')"
+        style="width: 100%; aspect-ratio: 1/1; background: #fff; min-width: 234px; max-width: 338px; cursor: pointer;">
+        <i class="fas fa-basketball-ball" style="font-size: 2.5rem; color: #17408B;"></i>
+        <h3 class="mt-3 mb-2" style="color: #17408B;">Puntos por Juego</h3>
+        <p class="mb-2">Top anotadores de la temporada</p>
+        <div class="card-arrow" style="font-size: 1.5rem; color: #C9082A;">→</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-3 mb-0 d-flex justify-content-center">
+      <div class="category-card d-flex flex-column justify-content-center align-items-center p-4 shadow-lg rounded"
+        [class.active]="selectedCategory === 'assists'" (click)="selectCategory('assists')"
+        style="width: 100%; aspect-ratio: 1/1; background: #fff; min-width: 234px; max-width: 338px; cursor: pointer;">
+        <i class="fas fa-hands-helping" style="font-size: 2.5rem; color: #17408B;"></i>
+        <h3 class="mt-3 mb-2" style="color: #17408B;">Asistencias por Juego</h3>
+        <p class="mb-2">Mejores pasadores de la liga</p>
+        <div class="card-arrow" style="font-size: 1.5rem; color: #C9082A;">→</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-3 mb-0 d-flex justify-content-center">
+      <div class="category-card d-flex flex-column justify-content-center align-items-center p-4 shadow-lg rounded"
+        [class.active]="selectedCategory === 'rebounds'" (click)="selectCategory('rebounds')"
+        style="width: 100%; aspect-ratio: 1/1; background: #fff; min-width: 234px; max-width: 338px; cursor: pointer;">
+        <i class="fas fa-chart-bar" style="font-size: 2.5rem; color: #17408B;"></i>
+        <h3 class="mt-3 mb-2" style="color: #17408B;">Rebotes por Juego</h3>
+        <p class="mb-2">Dominadores del tablero</p>
+        <div class="card-arrow" style="font-size: 1.5rem; color: #C9082A;">→</div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-3 mb-0 d-flex justify-content-center">
+      <div class="category-card d-flex flex-column justify-content-center align-items-center p-4 shadow-lg rounded"
+        [class.active]="selectedCategory === 'steals'" (click)="selectCategory('steals')"
+        style="width: 100%; aspect-ratio: 1/1; background: #fff; min-width: 234px; max-width: 338px; cursor: pointer;">
+        <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: #17408B;"></i>
+        <h3 class="mt-3 mb-2" style="color: #17408B;">Robos por Juego</h3>
+        <p class="mb-2">Especialistas defensivos</p>
+        <div class="card-arrow" style="font-size: 1.5rem; color: #C9082A;">→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detalle de la Categoría Seleccionada -->
+  @if (selectedCategory) {
+  <div class="stats-detail">
+    <div class="detail-header">
+      <h2>
+        <i [class]="getCategoryIcon()"></i>
+        {{ getCategoryTitle() }}
+      </h2>
+      <button class="close-btn" (click)="closeDetail()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="players-scroll-container">
+      <div class="players-grid">
+        @for (player of (getCurrentPlayers() | async); track player.id; let i = $index) {
+        <div class="player-card" [style.animation-delay]="i * 50 + 'ms'">
+          <div class="player-rank">{{ i + 1 }}</div>
+          <div class="player-image">
+            <img [src]="player.image" [alt]="player.firstName + ' ' + player.lastName">
+          </div>
+          <div class="player-info">
+            <h4>{{ player.firstName }} {{ player.lastName }}</h4>
+            <p class="player-team">{{ player.team.city }} {{ player.team.name }}</p>
+            <p class="player-position">{{ player.position }} | #{{ player.jerseyNumber }}</p>
+          </div>
+          <div class="player-stat">
+            <span class="stat-value">{{ getPlayerStat(player) | number: '1.1-1' }}</span>
+            <span class="stat-label">{{ getCategoryLabel() }}</span>
+          </div>
+          <div class="player-details">
+            <div class="detail-item">
+              <span>PTS:</span>
+              <span>{{ player.stats?.pointsPerGame | number: '1.1-1' }}</span>
+            </div>
+            <div class="detail-item">
+              <span>REB:</span>
+              <span>{{ player.stats?.reboundsPerGame | number: '1.1-1' }}</span>
+            </div>
+            <div class="detail-item">
+              <span>AST:</span>
+              <span>{{ player.stats?.assistsPerGame | number: '1.1-1' }}</span>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  } <!-- Indicador de datos en tiempo real -->
+  <div class="data-info">
+    <i class="fas fa-info-circle"></i>
+    <small>Estadísticas de la temporada 2024-25 NBA | Datos actualizados</small>
+  </div>
+</div>

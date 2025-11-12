@@ -1,0 +1,102 @@
+<div class="teams-container soares-section-bg">
+  <div class="teams-header">
+    <h1>Equipos NBA</h1>
+    <p>Haz clic en un equipo para ver sus jugadores</p>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+  <div class="loading-section">
+    <div class="spinner"></div>
+    <p>Cargando equipos...</p>
+  </div>
+  }
+
+  <!-- Error -->
+  @if (error && !loading) {
+  <div class="error-section">
+    <i class="fas fa-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+  </div>
+  }
+
+  <!-- Teams Content -->
+  @if (!loading) {
+  <div class="teams-content">
+    <!-- Conferencia Este -->
+    <div class="conference-section">
+      <h2 class="conference-title east">
+        <i class="fas fa-trophy"></i> Conferencia Este
+      </h2>
+      <div class="teams-grid">
+        <div class="team-card" *ngFor="let team of eastTeams" (click)="selectTeam(team)">
+          <div class="team-logo-container">
+            <img [src]="team.logo" [alt]="team.name" class="team-logo"
+              onerror="this.src='https://via.placeholder.com/80x80?text=NBA'">
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">{{ team.city }} {{ team.name }}</h3>
+            <p class="team-division">{{ team.division }} Division</p>
+            <div class="team-stats">
+              <span class="championships" *ngIf="team.championships > 0">
+                <i class="fas fa-crown"></i> {{ team.championships }} títulos
+              </span>
+              <span class="founded">Fundado: {{ team.founded }}</span>
+            </div>
+          </div>
+          <div class="team-actions">
+            <button class="view-players-btn">
+              <i class="fas fa-users"></i>
+              Ver Jugadores
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Conferencia Oeste -->
+    <div class="conference-section">
+      <h2 class="conference-title west">
+        <i class="fas fa-trophy"></i> Conferencia Oeste
+      </h2>
+      <div class="teams-grid">
+        <div class="team-card" *ngFor="let team of westTeams" (click)="selectTeam(team)">
+          <div class="team-logo-container">
+            <img [src]="team.logo" [alt]="team.name" class="team-logo"
+              onerror="this.src='https://via.placeholder.com/80x80?text=NBA'">
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">{{ team.city }} {{ team.name }}</h3>
+            <p class="team-division">{{ team.division }} Division</p>
+            <div class="team-stats">
+              <span class="championships" *ngIf="team.championships > 0">
+                <i class="fas fa-crown"></i> {{ team.championships }} títulos
+              </span>
+              <span class="founded">Fundado: {{ team.founded }}</span>
+            </div>
+          </div>
+          <div class="team-actions">
+            <button class="view-players-btn">
+              <i class="fas fa-users"></i>
+              Ver Jugadores
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Sin resultados -->
+  @if (!loading && teams.length === 0 && !error) {
+  <div class="no-results">
+    <i class="fas fa-basketball-ball"></i>
+    <p>No se encontraron equipos</p>
+  </div>
+  }
+</div>
+
+<!-- Modal de Jugadores -->
+@if (selectedTeam && showPlayersModal) {
+<app-players-modal [team]="selectedTeam" [show]="showPlayersModal" (close)="closePlayersModal()">
+</app-players-modal>
+}

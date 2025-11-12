@@ -1,0 +1,16 @@
+.inspiration-card {
+  display: grid;
+  grid-template-columns: 80px auto;
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid rgba(255, 159, 67, 0.25);
+  border-radius: 1rem;
+  padding: 0.75rem;
+}
+
+.inspiration-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 0.75rem;
+  object-fit: cover;
+}

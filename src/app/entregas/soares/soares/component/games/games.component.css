@@ -1,0 +1,239 @@
+.games-container {
+  padding: 2.5rem 2rem 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1;
+  background-color: #f8f9fa;
+}
+
+.games-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.games-header h1 {
+  color: #1a365d;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.view-navigation {
+  text-align: center;
+}
+
+.view-navigation .btn-group {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.view-navigation .btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+}
+
+.filters-section {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.games-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.game-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.game-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.game-date-time {
+  font-weight: 500;
+}
+
+.game-matchup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.team-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  gap: 1rem;
+}
+
+.team-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.team-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.team-logo-placeholder {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.75rem;
+  text-align: center;
+  line-height: 1;
+}
+
+.team-details h5 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.team-score {
+  text-align: center;
+}
+
+.score {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2d3748;
+}
+
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+}
+
+.vs-text {
+  background: var(--nba-red);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.game-info {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.final-score {
+  background: #f7fafc;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+.betting-info {
+  padding: 0.5rem;
+  background: #fafafa;
+  border-radius: 4px;
+  border-left: 3px solid var(--nba-red);
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.loading, .no-results {
+  padding: 3rem;
+}
+
+/* Estados de los badges */
+.badge.bg-primary {
+  background-color: #3182ce !important;
+}
+
+.badge.bg-warning {
+  background-color: #d69e2e !important;
+}
+
+.badge.bg-success {
+  background-color: #38a169 !important;
+}
+
+.badge.bg-danger {
+  background-color: #e53e3e !important;
+}
+
+.badge.bg-secondary {
+  background-color: #718096 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .games-container {
+    padding: 1.5rem 1rem 2rem 1rem;
+  }
+
+  .view-navigation .btn-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .view-navigation .btn {
+    border-radius: 0.375rem !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  .game-matchup {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .team-section {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .vs-divider {
+    order: -1;
+  }
+  
+  .team-info {
+    justify-content: center;
+  }
+
+  .game-date-time {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .filters-section .row {
+    gap: 1rem;
+  }
+
+  .filters-section .col-md-4 {
+    margin-bottom: 1rem;
+  }
+}

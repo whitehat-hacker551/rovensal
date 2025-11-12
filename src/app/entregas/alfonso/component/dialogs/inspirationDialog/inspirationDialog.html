@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Inspiraciones del día</h2>
+<mat-dialog-content class="d-grid gap-3">
+  @for (item of data.inspirations; track item.id) {
+    <div class="inspiration-card">
+      <img [src]="item.image" [alt]="item.title" />
+      <div>
+        <h6 class="mb-1">{{ item.title }}</h6>
+        <p class="small text-muted mb-1">{{ item.category }} · {{ item.area }}</p>
+        <p class="mb-0">{{ item.instructions }}</p>
+      </div>
+    </div>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" mat-dialog-close>Listo</button>
+</mat-dialog-actions>

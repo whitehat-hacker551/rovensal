@@ -1,0 +1,44 @@
+.card {
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: aliceblue;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+/*--------------------*/
+
+/* 
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: aliceblue;
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+} */
+
+/*---------------------*/
+
+.card-body{
+  background-color: var(--primary-color);
+    /* background-color: #b4b3e2; */
+}
+
+.card-title{
+  color: var(--accent-color);
+}
+
+.text-muted{
+  color: var(--shadow-color) !important;
+}
+
+.fw-bold{
+  color: var(--secondary-color);
+}

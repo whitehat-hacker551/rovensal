@@ -1,0 +1,14 @@
+<div class="card player-card shadow-sm">
+    <img [src]="player.image" class="card-img-top" [alt]="player.name">
+    <div class="card-body text-center">
+        <h5 class="card-title fw-bold">{{ player.name }}</h5>
+        <p class="text-muted mb-1">{{ player.team }}</p>
+        <p class="text-secondary mb-3">{{ player.position }}</p>
+        <button class="btn btn-primary btn-sm" (click)="vote()">
+            <i class="bi bi-star-fill me-1"></i>Votar
+        </button>
+        <p class="mt-2 text-success">
+            <strong><i class="bi bi-trophy-fill text-warning me-1"></i>Votos:</strong> {{ player.votes }}
+        </p>
+    </div>
+</div>

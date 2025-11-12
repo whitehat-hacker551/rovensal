@@ -1,0 +1,173 @@
+<div class="games-container soares-section-bg">
+    <div class="games-header">
+        <h1>Calendario NBA</h1>
+        <p>Explora los juegos y el calendario de la NBA - SportsData.io API</p>
+    </div>
+
+    <!-- Navegación de Vista -->
+    <div class="view-navigation mb-4">
+        <div class="btn-group" role="group" aria-label="Vista de juegos">
+            <button type="button" [class]="'btn ' + (viewMode === 'today' ? 'btn-danger' : 'btn-outline-danger')"
+                (click)="loadTodayGames()">
+                <i class="fas fa-calendar-day"></i> Hoy
+            </button>
+            <button type="button" [class]="'btn ' + (viewMode === 'upcoming' ? 'btn-danger' : 'btn-outline-danger')"
+                (click)="loadUpcomingGames()">
+                <i class="fas fa-calendar-week"></i> Próximos 7 días
+            </button>
+            <button type="button" [class]="'btn ' + (viewMode === 'date' ? 'btn-danger' : 'btn-outline-danger')"
+                (click)="viewMode = 'date'">
+                <i class="fas fa-calendar-alt"></i> Por Fecha
+            </button>
+            <button type="button" [class]="'btn ' + (viewMode === 'season' ? 'btn-danger' : 'btn-outline-danger')"
+                (click)="loadGamesBySeason()">
+                <i class="fas fa-calendar"></i> Temporada
+            </button>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters-section" *ngIf="viewMode === 'date' || viewMode === 'season'">
+        <div class="row">
+            <div class="col-md-4" *ngIf="viewMode === 'date'">
+                <label for="dateSelect" class="form-label">Fecha:</label>
+                <input type="date" id="dateSelect" class="form-control" [(ngModel)]="selectedDate"
+                    (change)="onDateChange()">
+            </div>
+            <div class="col-md-4" *ngIf="viewMode === 'season'">
+                <label for="seasonSelect" class="form-label">Temporada:</label>
+                <select id="seasonSelect" class="form-select" [(ngModel)]="selectedSeason" (change)="onSeasonChange()">
+                    <option value="2025REG">2024-25 Regular</option>
+                    <option value="2024REG">2023-24 Regular</option>
+                    <option value="2023REG">2022-23 Regular</option>
+                    <option value="2024POST">2024 Playoffs</option>
+                    <option value="2023POST">2023 Playoffs</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="teamSelect" class="form-label">Filtrar por Equipo:</label>
+                <select id="teamSelect" class="form-select" [(ngModel)]="selectedTeamKey" (change)="onTeamChange()">
+                    <option [value]="null">Todos los equipos</option>
+                    <option [value]="team.Key" *ngFor="let team of teams">{{ team.City }} {{ team.Name }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading text-center" *ngIf="loading">
+        <div class="spinner-border text-danger" role="status">
+            <span class="visually-hidden">Cargando juegos...</span>
+        </div>
+        <p>Cargando juegos...</p>
+    </div>
+
+    <div class="error-message alert alert-danger" *ngIf="error">
+        {{ error }}
+    </div>
+
+    <div class="games-grid" *ngIf="!loading && !error">
+        <div class="game-card card mb-3" *ngFor="let game of games">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="game-status">
+                    <span [class]="getGameStatusClass(game.Status)">
+                        {{ getGameStatusText(game.Status) }}
+                    </span>
+                </div>
+                <div class="game-date-time">
+                    <small class="text-muted">
+                        {{ formatGameDate(game.DateTime) }} - {{ formatGameTime(game.DateTime) }}
+                    </small>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="game-matchup">
+                    <!-- Equipo Visitante -->
+                    <div class="team-section">
+                        <div class="team-info">
+                            <div class="team-logo-placeholder">
+                                {{ game.AwayTeam }}
+                            </div>
+                            <div class="team-details">
+                                <h5>{{ getTeamName(game.AwayTeam) }}</h5>
+                                <small class="text-muted">Visitante</small>
+                            </div>
+                        </div>
+                        <div class="team-score" *ngIf="hasScore(game)">
+                            <span class="score">{{ game.AwayTeamScore }}</span>
+                        </div>
+                    </div>
+
+                    <div class="vs-divider">
+                        <span class="vs-text">VS</span>
+                    </div>
+
+                    <!-- Equipo Local -->
+                    <div class="team-section">
+                        <div class="team-info">
+                            <div class="team-logo-placeholder">
+                                {{ game.HomeTeam }}
+                            </div>
+                            <div class="team-details">
+                                <h5>{{ getTeamName(game.HomeTeam) }}</h5>
+                                <small class="text-muted">Local</small>
+                            </div>
+                        </div>
+                        <div class="team-score" *ngIf="hasScore(game)">
+                            <span class="score">{{ game.HomeTeamScore }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información adicional del juego -->
+                <div class="game-info mt-3">
+                    <div class="row">
+                        <div class="col-md-6" *ngIf="game.Channel">
+                            <small class="text-muted">
+                                <i class="fas fa-tv"></i> {{ game.Channel }}
+                            </small>
+                        </div>
+                        <div class="col-md-6" *ngIf="game.Attendance">
+                            <small class="text-muted">
+                                <i class="fas fa-users"></i> {{ game.Attendance | number }} asistentes
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Resultado final -->
+                    <div class="final-score text-center mt-2" *ngIf="hasScore(game) && game.Status === 'Final'">
+                        <h6 class="text-muted">Resultado Final</h6>
+                        <p class="mb-0">
+                            <span
+                                [class]="(game.AwayTeamScore ?? 0) > (game.HomeTeamScore ?? 0) ? 'text-success fw-bold' : 'text-muted'">
+                                {{ game.AwayTeam }} {{ game.AwayTeamScore }}
+                            </span>
+                            -
+                            <span
+                                [class]="(game.HomeTeamScore ?? 0) > (game.AwayTeamScore ?? 0) ? 'text-success fw-bold' : 'text-muted'">
+                                {{ game.HomeTeamScore }} {{ game.HomeTeam }}
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Información de apuestas -->
+                    <div class="betting-info mt-2" *ngIf="game.PointSpread || game.OverUnder">
+                        <small class="text-muted">
+                            <span *ngIf="game.PointSpread">
+                                <i class="fas fa-chart-line"></i> Spread: {{ game.PointSpread }}
+                            </span>
+                            <span *ngIf="game.OverUnder" class="ms-3">
+                                <i class="fas fa-arrow-up"></i> O/U: {{ game.OverUnder }}
+                            </span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-results text-center" *ngIf="!loading && games.length === 0 && !error">
+        <i class="fas fa-calendar fa-3x text-muted mb-3"></i>
+        <p class="text-muted">No se encontraron juegos para los filtros seleccionados</p>
+        <small class="text-muted">Prueba seleccionando una fecha diferente o quitando los filtros de equipo</small>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+@if (visible) {
+  <div class="context-menu" [style.left.px]="x" [style.top.px]="y">
+    @for (action of actions; track action.id) {
+      <button type="button" (click)="select(action)">
+        <i class="{{ action.icon }} me-2"></i>{{ action.label }}
+      </button>
+    }
+  </div>
+}

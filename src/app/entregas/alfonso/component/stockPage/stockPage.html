@@ -1,0 +1,42 @@
+<section class="container py-4">
+  <div class="d-flex justify-content-between flex-wrap gap-3 mb-4 align-items-center">
+    <div>
+      <h2>Inventario vivo</h2>
+      <p class="text-muted mb-0">Actualiza estados según compras o mermas. Compartido con todo el equipo.</p>
+    </div>
+    <a routerLink="/alfonso" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Volver al laboratorio
+    </a>
+  </div>
+
+  <div class="row g-3">
+    @for (item of items(); track item.id) {
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-3 h-100">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h5>{{ item.name }}</h5>
+              <p class="text-muted small mb-2">{{ item.category | titlecase }} · proveedor {{ item.supplier }}</p>
+              <p class="mb-1"><strong>{{ item.quantity }} {{ item.unit }}</strong> · punto de reposición {{ item.reorderLevel }} {{ item.unit }}</p>
+              @if (item.notes) {
+                <p class="small text-muted mb-2">{{ item.notes }}</p>
+              }
+            </div>
+            <span class="badge" [class]="statusClass(item.status)">
+              @switch (item.status) {
+                @case ('ok') { Disponible }
+                @case ('bajo') { Reponer }
+                @case ('agotado') { Urgente }
+              }
+            </span>
+          </div>
+          <div class="d-flex gap-2 mt-2">
+            <button mat-stroked-button color="primary" (click)="updateStatus(item,'ok')">OK</button>
+            <button mat-stroked-button color="warn" (click)="updateStatus(item,'bajo')">Bajo</button>
+            <button mat-flat-button color="warn" (click)="updateStatus(item,'agotado')">Agotado</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>

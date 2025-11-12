@@ -1,0 +1,39 @@
+<div class="modal-overlay" *ngIf="show" (click)="onBackdropClick($event)">
+    <div class="modal-content" *ngIf="player">
+        <div class="modal-header">
+            <h3 class="modal-title">
+                <i class="fas fa-star text-warning"></i>
+                Votar por {{ player.name }}
+            </h3>
+            <button type="button" class="btn-close" (click)="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="player-info-card">
+                <img [src]="player.image" [alt]="player.name" class="player-image">
+                <div class="player-details">
+                    <h4>{{ player.name }}</h4>
+                    <p class="team"><i class="fas fa-basketball-ball"></i> {{ player.team }}</p>
+                    <p class="position"><i class="fas fa-user"></i> {{ player.position }}</p>
+                    <div class="current-votes">
+                        <i class="fas fa-thumbs-up text-primary"></i>
+                        Votos actuales: <strong>{{ player.votes }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">
+                <i class="fas fa-times me-1"></i>
+                Cancelar
+            </button>
+            <button type="button" class="btn btn-primary" (click)="confirmVote()">
+                <i class="fas fa-check me-1"></i>
+                Confirmar Voto
+            </button>
+        </div>
+    </div>
+</div>

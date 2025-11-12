@@ -1,0 +1,30 @@
+.content {
+  padding: var(--content-padding);
+  height: 60vh;
+}
+
+input[type="search"] {
+  border: solid 1px var(--secondary-color);
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 4px;
+  width: 75%;
+}
+
+input[type="search"]:focus{
+  outline: none;
+  border: 2px solid #ecc975;
+}
+
+button[type="submit"] {
+  margin-right: 30px;
+  padding: 10px;
+  border: solid 1px var(--secondary-color);
+  background: var(--secondary-color);
+  color: white;
+  border-radius: 8px;
+}
+
+button[type="submit"]:hover{
+  background-color: #ecc975;
+}

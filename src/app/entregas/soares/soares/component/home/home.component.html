@@ -1,0 +1,119 @@
+<div class="home-container fade-in-up">
+  <!-- Hero Section -->
+  <section class="hero-section mb-5 soares-section-bg d-flex flex-column align-items-center justify-content-center"
+    style="background: linear-gradient(135deg, #e3eafc 0%, #f8f9fa 100%); border-radius: 24px; box-shadow: 0 8px 32px rgba(23,64,139,0.12); padding: 3rem 1rem;">
+    <div class="hero-content text-center">
+      <img src="/soares/soares-nba-logo.svg" alt="NBA Logo"
+        style="max-width: 260px; width: 100%; height: auto; margin-bottom: 1.5rem; filter: drop-shadow(0 4px 16px rgba(23,64,139,0.25)); animation: fadeInLogo 1.2s;">
+      <p class="lead fw-semibold mb-4" style="color: #fff; text-shadow: 0 2px 8px rgba(23,64,139,0.18);">Bienvenido a la
+        comunidad NBA. <span style="color: #17408B;">Explora estadísticas, equipos, ranking y juega el quiz
+          oficial.</span></p>
+      <div class="d-flex gap-4 justify-content-center flex-wrap mb-2">
+        <button class="btn btn-nba-red btn-lg btn-nba-hover px-4 py-3 shadow-lg"
+          style="font-size: 1.3rem; border-radius: 2rem; transition: all 0.2s; background: #C9082A; color: #fff;"
+          routerLink="/soares/ranking">
+          <i class="bi bi-trophy-fill me-2" style="font-size: 2rem;"></i>Top 10 NBA
+        </button>
+        <button class="btn btn-nba-red btn-lg btn-nba-hover px-4 py-3 shadow-lg"
+          style="font-size: 1.3rem; border-radius: 2rem; transition: all 0.2s; background: #C9082A; color: #fff;"
+          routerLink="/soares/quiz">
+          <i class="bi bi-question-circle me-2" style="font-size: 2rem;"></i>Jugar Quiz
+        </button>
+      </div>
+    </div>
+  </section>
+  <style>
+    @keyframes fadeInLogo {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+
+  <!-- Top Players Carousel Section -->
+  <section class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+      <h2 class="text-nba-blue">
+        <i class="bi bi-star-fill text-nba-red me-2"></i><span style="color: #17408B;">Mejores Jugadores
+          2024-2025</span>
+      </h2>
+      <button class="btn btn-warning" routerLink="/soares/ranking">
+        <i class="bi bi-hand-thumbs-up me-2"></i>Vota en tu jugador favorito
+      </button>
+    </div>
+
+    <!-- Grid Cards con fotos reales de NBA -->
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6" *ngFor="let player of topPlayers; let i = index">
+        <div class="card card-nba-player h-100 shadow-sm slide-in-left" [style.animation-delay]="(i * 0.1) + 's'"
+          style="background: #e3eafc; border-radius: 18px;">
+          <div class="card-header text-center py-4" style="background: transparent;">
+            <div class="player-avatar mb-3">
+              <img [src]="player.image" [alt]="player.name" class="rounded-circle"
+                style="width: 100px; height: 100px; object-fit: cover; border: 4px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.3);"
+                onerror="this.src='https://via.placeholder.com/100x100?text=NBA&bg=1e3a8a&color=white'">
+            </div>
+            <h5 class="mb-2 nba-player-name" style="color: #17408B;">{{ player.name }}</h5>
+            <p class="mb-0 nba-player-team" style="color: #C9082A;">{{ player.team }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="container my-5 p-5"
+    style="background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%); border-radius: 16px;">
+    <h2 class="text-center mb-5 text-nba-blue">
+      <i class="bi bi-lightning-fill text-nba-red me-2"></i><span style="color: #17408B;">Explora la NBA</span>
+    </h2>
+
+    <div class="row g-3">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card card-nba h-100 text-center" routerLink="/soares/statistics" style="cursor: pointer;">
+          <div class="card-body py-3">
+            <div class="mb-2"
+              style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 1rem; border-radius: 6px;">
+              <i class="bi bi-bar-chart-fill" style="font-size: 2rem; color: #17408B;"></i>
+            </div>
+            <h6 class="card-title mb-1" style="color: #17408B;">Estadísticas</h6>
+            <p class="card-text small" style="color: #17408B;">Estadísticas de jugadores y equipos</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card card-nba h-100 text-center" routerLink="/soares/games" style="cursor: pointer;">
+          <div class="card-body py-3">
+            <div class="mb-2"
+              style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 1rem; border-radius: 6px;">
+              <i class="bi bi-calendar-event-fill" style="font-size: 2rem; color: #17408B;"></i>
+            </div>
+            <h6 class="card-title mb-1" style="color: #17408B;">Juegos NBA</h6>
+            <p class="card-text small" style="color: #17408B;">Calendario y resultados</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card card-nba h-100 text-center" routerLink="/soares/teams" style="cursor: pointer;">
+          <div class="card-body py-3">
+            <div class="mb-2"
+              style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 1rem; border-radius: 6px;">
+              <i class="bi bi-people-fill" style="font-size: 2rem; color: #17408B;"></i>
+            </div>
+            <h6 class="card-title mb-1" style="color: #17408B;">Equipos</h6>
+            <p class="card-text small" style="color: #17408B;">Explora todos los equipos NBA</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ...existing code... -->
+</div>

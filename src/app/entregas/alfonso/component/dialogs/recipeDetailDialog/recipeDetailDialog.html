@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>{{ recipe.title }}</h2>
+<mat-dialog-content>
+  <p class="text-muted">{{ recipe.description }}</p>
+  <div class="row g-3">
+    <div class="col-6"><strong>Dificultad:</strong> {{ recipe.difficulty | titlecase }}</div>
+    <div class="col-6"><strong>Tiempo:</strong> {{ recipe.timeMinutes }} min</div>
+    <div class="col-6"><strong>Calorías:</strong> {{ recipe.calories }}</div>
+    <div class="col-6"><strong>Autoría:</strong> {{ recipe.author }}</div>
+  </div>
+  <h6 class="mt-3">Ingredientes</h6>
+  <ul>
+    @for (ingredient of recipe.ingredients; track ingredient.name) {
+      <li>
+        {{ ingredient.quantity }} {{ ingredient.unit }} · {{ ingredient.name }}
+        @if (ingredient.optional) {
+          <span class="text-muted">(opcional)</span>
+        }
+      </li>
+    }
+  </ul>
+  <h6>Pasos</h6>
+  <ol>
+    @for (step of recipe.steps; track step) {
+      <li>{{ step }}</li>
+    }
+  </ol>
+  <mat-chip-set>
+    @for (tag of recipe.tags; track tag) {
+      <mat-chip color="primary" selected>{{ tag }}</mat-chip>
+    }
+  </mat-chip-set>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close>Volver</button>
+  <button mat-flat-button color="primary" (click)="close()">Descargar mise</button>
+</mat-dialog-actions>
